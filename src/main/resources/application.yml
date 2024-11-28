@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: local
+
+---
+# 로컬 전용 설정
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/groomers_unite?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+---
+# 개발(dev) 환경 전용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://dev-server:3306/groomers_unite?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: dev_user
+    password: dev_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
