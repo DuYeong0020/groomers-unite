@@ -4,13 +4,16 @@ import com.petstylelab.groomersunite.domain.BaseEntity;
 import com.petstylelab.groomersunite.domain.comment.Comment;
 import com.petstylelab.groomersunite.domain.user.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 
     @Id
