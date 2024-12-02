@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
-    private String created_by;
-    private String updated_by;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
 }
