@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class UserServiceImpl implements UserService {
 
     private final UserValidator userValidator;
+    private final UserStore userStore;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -18,7 +19,8 @@ public class UserServiceImpl implements UserService {
         userValidator.checkRegisterUser(request);
         var encodedPassword = passwordEncoder.encode(request.getPassword());
         var initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
-        return null;
+        var user = userStore.storeUser(initUser);
+        return new UserInfo(user);
     }
 
     @Override

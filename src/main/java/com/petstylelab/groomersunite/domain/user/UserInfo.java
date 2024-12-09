@@ -13,12 +13,12 @@ public class UserInfo {
     private final Role role;
     private final LocalDate registrationDate;
 
-    public UserInfo(User user, LocalDate registrationDate) {
+    public UserInfo(User user) {
         this.loginId = user.getLoginId();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.nickname = user.getNickname();
         this.role = user.getRole();
-        this.registrationDate = registrationDate;
+        this.registrationDate = user.getRegistrationDate();
     }
 }
