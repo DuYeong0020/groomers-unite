@@ -24,25 +24,45 @@ public class UserCommand {
             this.password = password;
             this.nickname = nickname;
         }
+
     }
 
     @Getter
     @ToString
     public static class ModifyUserRequest {
         private final String nickname;
+        private final String loginId;
         private final String currentPassword;
         private final String newPassword;
 
         public ModifyUserRequest(
                 String nickname,
+                String loginId,
                 String currentPassword,
                 String newPassword
         ) {
             this.nickname = nickname;
+            this.loginId = loginId;
             this.currentPassword = currentPassword;
             this.newPassword = newPassword;
         }
     }
 
+    @Getter
+    @ToString
+    public class ModifyPasswordRequest {
+        private final String loginId;
+        private final String newPassword;
+        private final String confirmPassword;
 
+        public ModifyPasswordRequest(
+                String loginId,
+                String newPassword,
+                String confirmPassword
+        ) {
+            this.loginId = loginId;
+            this.newPassword = newPassword;
+            this.confirmPassword = confirmPassword;
+        }
+    }
 }
