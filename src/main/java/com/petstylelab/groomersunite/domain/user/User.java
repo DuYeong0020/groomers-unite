@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,5 +22,6 @@ public class User extends BaseEntity {
     private String nickname;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private LocalDate registrationDate;
 
 }
