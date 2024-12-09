@@ -1,11 +1,18 @@
 package com.petstylelab.groomersunite.domain.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final UserValidator userValidator;
+
+
     @Override
     public UserInfo registerUser(UserCommand.RegisterUserRequest request) {
+        userValidator.checkRegisterUser(request);
         return null;
     }
 
