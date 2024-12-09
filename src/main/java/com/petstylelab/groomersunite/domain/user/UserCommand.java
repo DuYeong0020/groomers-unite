@@ -3,6 +3,8 @@ package com.petstylelab.groomersunite.domain.user;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 public class UserCommand {
 
     @Getter
@@ -23,6 +25,17 @@ public class UserCommand {
             this.email = email;
             this.password = password;
             this.nickname = nickname;
+        }
+
+        public User toEntity(String encodePassword, Role role, LocalDate registrationDate) {
+            return User.builder()
+                    .loginId(this.loginId)
+                    .email(this.email)
+                    .password(encodePassword)
+                    .nickname(this.nickname)
+                    .role(role)
+                    .registrationDate(registrationDate)
+                    .build();
         }
 
     }

@@ -1,18 +1,23 @@
 package com.petstylelab.groomersunite.domain.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserValidator userValidator;
-
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserInfo registerUser(UserCommand.RegisterUserRequest request) {
         userValidator.checkRegisterUser(request);
+        var encodedPassword = passwordEncoder.encode(request.getPassword());
+        var initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
         return null;
     }
 
