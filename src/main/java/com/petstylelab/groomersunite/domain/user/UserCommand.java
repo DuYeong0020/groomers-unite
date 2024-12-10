@@ -1,5 +1,6 @@
 package com.petstylelab.groomersunite.domain.user;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -15,6 +16,7 @@ public class UserCommand {
         private final String password;
         private final String nickname;
 
+        @Builder
         public RegisterUserRequest(
                 String loginId,
                 String email,

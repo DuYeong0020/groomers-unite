@@ -16,6 +16,8 @@ public class UserApiController {
 
     @PostMapping
     public CommonResponse registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
+        var command = request.toCommand();
+        var userInfo = userService.registerUser(command);
         return null;
     }
 }
