@@ -14,10 +14,12 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping
-    public CommonResponse registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
+    @PostMapping("/users")
+    public CommonResponse<UserDto.RegisterResponse> registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
         var command = request.toCommand();
         var userInfo = userService.registerUser(command);
-        return null;
+        var response = new UserDto.RegisterResponse(userInfo);
+
+        return CommonResponse.success(response);
     }
 }
