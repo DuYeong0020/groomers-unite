@@ -44,4 +44,12 @@ public class User extends BaseEntity {
         this.registrationDate = registrationDate;
     }
 
+
+    public void modifyNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void modifyPassword(String password) {
+        this.password = password;
+    }
 }

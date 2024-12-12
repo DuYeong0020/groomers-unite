@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
     private final UserStore userStore;
     private final PasswordEncoder passwordEncoder;
+    private final UserReader userReader;
 
     @Override
     @Transactional
@@ -26,8 +27,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserInfo modifyUser(UserCommand.ModifyUserRequest request) {
-        return null;
+        userValidator.checkModifyUser(request);
+        var user = userReader.findByLoginId(request.getLoginId());
+        user.modifyNickname(request.getNickname());
+        user.modifyPassword(request.getNewPassword());
+        return new UserInfo(user);
     }
 
     @Override
