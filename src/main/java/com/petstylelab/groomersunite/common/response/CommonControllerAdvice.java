@@ -1,10 +1,14 @@
 package com.petstylelab.groomersunite.common.response;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -28,11 +32,25 @@ public class CommonControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RuntimeException.class)
     public <T> CommonResponse<T> handleRuntimeException(RuntimeException ex) {
-        if(ex.getMessage() == null) {
+        if (ex.getMessage() == null) {
             return CommonResponse.fail(ErrorCode.COMMON_INVALID_PARAMETER);
         }
 
         log.error("RuntimeException: {}", ex.getMessage());
         return CommonResponse.fail(ex.getMessage(), ErrorCode.COMMON_INVALID_PARAMETER.name());
+    }
+
+    /**
+     * Handles MethodArgumentNotValidException.
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public <T> CommonResponse<T> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        String errorMessage = ex.getBindingResult().getFieldErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(", "));
+
+        log.error("MethodArgumentNotValidException: {}", errorMessage);
+        return CommonResponse.fail(errorMessage, ErrorCode.COMMON_INVALID_PARAMETER.name());
     }
 }
