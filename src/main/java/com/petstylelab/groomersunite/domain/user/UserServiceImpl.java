@@ -20,9 +20,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserInfo registerUser(UserCommand.RegisterUserRequest request) {
         userValidator.checkRegisterUser(request);
-        var encodedPassword = passwordEncoder.encode(request.getPassword());
-        var initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
-        var user = userStore.storeUser(initUser);
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        User initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
+        User user = userStore.storeUser(initUser);
         return new UserInfo(user);
     }
 
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserInfo modifyUser(UserCommand.ModifyUserRequest request) {
         userValidator.checkModifyUser(request);
-        var user = userReader.findByLoginId(request.getLoginId());
+        User user = userReader.findByLoginId(request.getLoginId());
         user.modifyNickname(request.getNickname());
         user.modifyPassword(request.getNewPassword());
         return new UserInfo(user);

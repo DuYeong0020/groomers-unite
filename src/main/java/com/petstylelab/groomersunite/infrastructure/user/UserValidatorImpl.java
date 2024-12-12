@@ -1,5 +1,6 @@
 package com.petstylelab.groomersunite.infrastructure.user;
 
+import com.petstylelab.groomersunite.domain.user.User;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
 import com.petstylelab.groomersunite.domain.user.UserReader;
 import com.petstylelab.groomersunite.domain.user.UserValidator;
@@ -57,7 +58,7 @@ public class UserValidatorImpl implements UserValidator {
     }
 
     private void checkMatchLoginIdPassword(String loginId, String password) {
-        var user = userReader.findByLoginId(loginId);
+        User user = userReader.findByLoginId(loginId);
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }

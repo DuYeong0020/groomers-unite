@@ -1,6 +1,8 @@
 package com.petstylelab.groomersunite.interfaces.user;
 
 import com.petstylelab.groomersunite.common.response.CommonResponse;
+import com.petstylelab.groomersunite.domain.user.UserCommand;
+import com.petstylelab.groomersunite.domain.user.UserInfo;
 import com.petstylelab.groomersunite.domain.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +18,9 @@ public class UserApiController {
 
     @PostMapping("/users")
     public CommonResponse<UserDto.RegisterResponse> registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
-        var command = request.toCommand();
-        var userInfo = userService.registerUser(command);
-        var response = new UserDto.RegisterResponse(userInfo);
+        UserCommand.RegisterUserRequest command = request.toCommand();
+        UserInfo userInfo = userService.registerUser(command);
+        UserDto.RegisterResponse response = new UserDto.RegisterResponse(userInfo);
 
         return CommonResponse.success(response);
     }
