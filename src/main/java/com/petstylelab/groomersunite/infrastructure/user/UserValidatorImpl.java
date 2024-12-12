@@ -26,7 +26,6 @@ public class UserValidatorImpl implements UserValidator {
     public void checkModifyUser(UserCommand.ModifyUserRequest request) {
         checkMatchLoginIdPassword(request.getLoginId(), request.getCurrentPassword());
         checkPasswordNotSame(request.getCurrentPassword(), request.getNewPassword());
-        checkDuplicateNickname(request.getNickname());
     }
 
     private void checkDuplicateNickname(String nickname) {
