@@ -50,6 +50,7 @@ public class UserCommand {
         private final String currentPassword;
         private final String newPassword;
 
+        @Builder
         public ModifyUserRequest(
                 String nickname,
                 String loginId,
