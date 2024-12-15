@@ -46,10 +46,14 @@ public class User extends BaseEntity {
 
 
     public void modifyNickname(String nickname) {
-        this.nickname = nickname;
+        if (StringUtils.hasText(nickname)) {
+            this.nickname = nickname;
+        }
     }
 
     public void modifyPassword(String password) {
-        this.password = password;
+        if (StringUtils.hasText(password)) {
+            this.password = password;
+        }
     }
 }
