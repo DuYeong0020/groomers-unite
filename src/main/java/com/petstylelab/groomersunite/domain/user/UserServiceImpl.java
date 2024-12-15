@@ -31,8 +31,9 @@ public class UserServiceImpl implements UserService {
     public UserInfo modifyUser(UserCommand.ModifyUserRequest request) {
         userValidator.checkModifyUser(request);
         User user = userReader.findByLoginId(request.getLoginId());
+        String encodedPassword = passwordEncoder.encode(request.getCurrentPassword());
         user.modifyNickname(request.getNickname());
-        user.modifyPassword(request.getNewPassword());
+        user.modifyPassword(encodedPassword);
         return new UserInfo(user);
     }
 
