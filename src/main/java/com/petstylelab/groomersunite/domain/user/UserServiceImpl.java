@@ -14,20 +14,27 @@ public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
     private final UserStore userStore;
     private final PasswordEncoder passwordEncoder;
+    private final UserReader userReader;
 
     @Override
     @Transactional
     public UserInfo registerUser(UserCommand.RegisterUserRequest request) {
         userValidator.checkRegisterUser(request);
-        var encodedPassword = passwordEncoder.encode(request.getPassword());
-        var initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
-        var user = userStore.storeUser(initUser);
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        User initUser = request.toEntity(encodedPassword, Role.NORMAL, LocalDate.now());
+        User user = userStore.storeUser(initUser);
         return new UserInfo(user);
     }
 
     @Override
+    @Transactional
     public UserInfo modifyUser(UserCommand.ModifyUserRequest request) {
-        return null;
+        userValidator.checkModifyUser(request);
+        User user = userReader.findByLoginId(request.getLoginId());
+        String encodedPassword = passwordEncoder.encode(request.getCurrentPassword());
+        user.modifyNickname(request.getNickname());
+        user.modifyPassword(encodedPassword);
+        return new UserInfo(user);
     }
 
     @Override

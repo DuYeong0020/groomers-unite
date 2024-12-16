@@ -44,4 +44,16 @@ public class User extends BaseEntity {
         this.registrationDate = registrationDate;
     }
 
+
+    public void modifyNickname(String nickname) {
+        if (StringUtils.hasText(nickname)) {
+            this.nickname = nickname;
+        }
+    }
+
+    public void modifyPassword(String password) {
+        if (StringUtils.hasText(password)) {
+            this.password = password;
+        }
+    }
 }
