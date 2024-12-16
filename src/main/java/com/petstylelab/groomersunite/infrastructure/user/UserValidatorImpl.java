@@ -29,6 +29,25 @@ public class UserValidatorImpl implements UserValidator {
         checkPasswordNotSame(request.getCurrentPassword(), request.getNewPassword());
     }
 
+    @Override
+    public void checkModifyPassword(UserCommand.ModifyPasswordRequest request) {
+        checkPasswordSame(request.getNewPassword(), request.getConfirmPassword());
+        checkPasswordReuse(request.getLoginId(), request.getNewPassword());
+    }
+
+    private void checkPasswordReuse(String loginId, String newPassword) {
+        var User = userReader.findByLoginId(loginId);
+        if (passwordEncoder.matches(newPassword, User.getPassword())) {
+            throw new RuntimeException("전에 사용하였던 비밀번호를 사용할 수 없습니다.");
+        }
+    }
+
+    private void checkPasswordSame(String newPassword, String confirmPassword) {
+        if (!newPassword.equals(confirmPassword)) {
+            throw new RuntimeException("비밀번호 확인이 올바르지 않습니다.");
+        }
+    }
+
     private void checkDuplicateNickname(String nickname) {
         userJpaRepository.findByNickname(nickname)
                 .ifPresent(user -> {
