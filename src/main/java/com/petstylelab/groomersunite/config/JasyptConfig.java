@@ -17,11 +17,9 @@ public class JasyptConfig {
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-
         encryptor.setPassword(password);
         encryptor.setSaltGenerator(new RandomSaltGenerator());
         encryptor.setIvGenerator(new NoIvGenerator());
-
         return encryptor;
     }
 }

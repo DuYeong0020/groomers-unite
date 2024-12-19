@@ -9,9 +9,9 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/groomers_unite?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/groomers_unite?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
-    password: 1234
+    password: ENC(JSmBs5v1C0KM8SvNx8SSCw==)
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -20,7 +20,21 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: duyeong0020@gmail.com
+    password: ENC(8LyJGtUH0CHfZ9oO/exrRZT6oS58Z5nNCeeFjoMNkKQ=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connection timeout: 5000
+          timeout: 5000
+          write timeout: 5000
 ---
 # 개발(dev) 환경 전용 설정
 spring:
