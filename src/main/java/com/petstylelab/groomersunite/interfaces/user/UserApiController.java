@@ -1,6 +1,8 @@
 package com.petstylelab.groomersunite.interfaces.user;
 
 import com.petstylelab.groomersunite.common.response.CommonResponse;
+import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenInfo;
+import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenService;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
 import com.petstylelab.groomersunite.domain.user.UserService;
@@ -16,6 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController {
 
     private final UserService userService;
+    private final EmailVerificationTokenService emailVerificationTokenService;
+
+    @PostMapping("/users/email-verification")
+    public CommonResponse<UserDto.EmailVerificationResponse> sendEmailVerification(@RequestBody @Valid UserDto.EmailVerificationRequest request) {
+        EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRegistrationVerificationEmail(request.getEmail());
+        UserDto.EmailVerificationResponse response = new UserDto.EmailVerificationResponse(emailVerificationTokenInfo);
+        return CommonResponse.success(response);
+    }
 
     @PostMapping("/users")
     public CommonResponse<UserDto.RegisterResponse> registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
