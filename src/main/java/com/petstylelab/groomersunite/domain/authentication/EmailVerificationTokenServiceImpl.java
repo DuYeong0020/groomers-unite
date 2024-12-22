@@ -31,12 +31,12 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
     @Override
     public EmailVerificationTokenInfo sendRecoveryVerificationEmail(String email) {
         emailVerificationTokenValidator.checkSendRecoveryVerificationEmail(email);
-        TokenType tokenType = TokenType.PASSWORD_RESET;
+        TokenType tokenType = TokenType.EMAIL_VERIFICATION;
         EmailVerificationToken initVerificationToken = emailVerificationTokenFactory.createVerificationToken(email, tokenType);
         User user = userReader.findByEmail(email);
         EmailVerificationToken emailVerificationToken = emailVerificationTokenStore.storeEmailVerificationToken(initVerificationToken);
         emailVerificationToken.assignUser(user);
-
-        return null;
+        emailSender.sendEmail(email, emailVerificationToken.getSubject(), emailVerificationToken.getBody());
+        return new EmailVerificationTokenInfo(emailVerificationToken);
     }
 }
