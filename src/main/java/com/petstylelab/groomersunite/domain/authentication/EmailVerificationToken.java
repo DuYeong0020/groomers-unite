@@ -3,9 +3,12 @@ package com.petstylelab.groomersunite.domain.authentication;
 import com.petstylelab.groomersunite.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -47,4 +50,20 @@ public class EmailVerificationToken {
         return LocalDateTime.now().isAfter(this.expiresAt);
     }
 
+    @Builder
+    public EmailVerificationToken(String token, String email, String subject, String body, LocalDateTime expiresAt, TokenType tokenType) {
+        if (token == null) throw new InvalidParameterException();
+        if (!StringUtils.hasText(email)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(subject)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(body)) throw new InvalidParameterException();
+        if (expiresAt == null) throw new InvalidParameterException();
+        if (tokenType == null) throw new InvalidParameterException();
+
+        this.token = token;
+        this.email = email;
+        this.subject = subject;
+        this.body = body;
+        this.expiresAt = expiresAt;
+        this.tokenType = tokenType;
+    }
 }
