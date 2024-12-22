@@ -17,4 +17,10 @@ public class UserJpaReader implements UserReader {
         return userJpaRepository.findByLoginId(loginId)
                 .orElseThrow(EntityNotFoundException::new);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userJpaRepository.findByEmail(email)
+                .orElseThrow(EntityNotFoundException::new);
+    }
 }
