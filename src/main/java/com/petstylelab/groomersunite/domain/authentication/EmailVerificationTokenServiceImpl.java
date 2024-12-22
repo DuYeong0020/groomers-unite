@@ -24,4 +24,12 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
         emailSender.sendEmail(email, emailVerificationToken.getSubject(), emailVerificationToken.getBody());
         return new EmailVerificationTokenInfo(emailVerificationToken);
     }
+
+    @Override
+    public EmailVerificationTokenInfo sendRecoveryVerificationEmail(String email) {
+        emailVerificationTokenValidator.checkSendRecoveryVerificationEmail(email);
+        TokenType tokenType = TokenType.PASSWORD_RESET;
+
+        return null;
+    }
 }

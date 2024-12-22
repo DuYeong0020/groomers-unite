@@ -16,10 +16,18 @@ public class EmailVerificationTokenValidatorImpl implements EmailVerificationTok
         checkDuplicateEmail(email);
     }
 
+    @Override
+    public void checkSendRecoveryVerificationEmail(String email) {
+        checkEmailExistsForRecovery(email);
+    }
+
+    private void checkEmailExistsForRecovery(String email) {
+        userJpaRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("해당 이메일로 등록된 사용자가 없습니다."));
+    }
+
     private void checkDuplicateEmail(String email) {
-        userJpaRepository.findByEmail(email)
-                .ifPresent(user -> {
-                    throw new RuntimeException("이미 등록된 이메일 주소입니다.");
-                });
+        userJpaRepository.findByEmail(email).ifPresent(user -> {
+            throw new RuntimeException("이미 등록된 이메일 주소입니다.");
+        });
     }
 }
