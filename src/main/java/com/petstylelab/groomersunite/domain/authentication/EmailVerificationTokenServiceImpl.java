@@ -1,5 +1,6 @@
 package com.petstylelab.groomersunite.domain.authentication;
 
+import com.petstylelab.groomersunite.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +30,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
     public EmailVerificationTokenInfo sendRecoveryVerificationEmail(String email) {
         emailVerificationTokenValidator.checkSendRecoveryVerificationEmail(email);
         TokenType tokenType = TokenType.PASSWORD_RESET;
-
+        EmailVerificationToken initVerificationToken = emailVerificationTokenFactory.createVerificationToken(email, tokenType);
         return null;
     }
 }
