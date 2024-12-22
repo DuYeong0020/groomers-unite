@@ -15,12 +15,18 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EmailVerificationToken {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String token;
 
     private String email;
+
+    private String subject;
+
+    @Lob
+    private String body;
 
     private LocalDateTime expiresAt; // 토큰 만료 시간
 
