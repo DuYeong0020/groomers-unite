@@ -10,6 +10,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
 
     private final EmailVerificationTokenValidator emailVerificationTokenValidator;
     private final EmailVerificationTokenFactory emailVerificationTokenFactory;
+    private final EmailVerificationTokenStore emailVerificationTokenStore;
 
     @Override
     @Transactional
@@ -17,6 +18,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
         emailVerificationTokenValidator.checkSendRegistrationVerificationEmail(email);
         TokenType tokenType = TokenType.EMAIL_VERIFICATION;
         EmailVerificationToken initVerificationToken = emailVerificationTokenFactory.createVerificationToken(email, tokenType);
+        EmailVerificationToken emailVerificationToken = emailVerificationTokenStore.storeEmailVerificationToken(initVerificationToken);
         return null;
     }
 }
