@@ -46,6 +46,10 @@ public class EmailVerificationToken {
         return UUID.randomUUID().toString();
     }
 
+    public void assignUser(User user) {
+        this.user = user;
+    }
+
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(this.expiresAt);
     }
