@@ -29,6 +29,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
     }
 
     @Override
+    @Transactional
     public EmailVerificationTokenInfo sendRecoveryVerificationEmail(String email) {
         emailVerificationTokenValidator.checkSendRecoveryVerificationEmail(email);
         TokenType tokenType = TokenType.ACCOUNT_RECOVERY;
