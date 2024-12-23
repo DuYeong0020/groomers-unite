@@ -21,9 +21,9 @@ public class UserApiController {
     private final EmailVerificationTokenService emailVerificationTokenService;
 
     @PostMapping("/users/email-verification")
-    public CommonResponse<UserDto.EmailVerificationResponse> sendEmailVerification(@RequestBody @Valid UserDto.EmailVerificationRequest request) {
+    public CommonResponse<UserDto.RegistrationEmailVerificationResponse> sendRegistrationEmailVerification(@RequestBody @Valid UserDto.RegistrationEmailVerificationRequest request) {
         EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRegistrationVerificationEmail(request.getEmail());
-        UserDto.EmailVerificationResponse response = new UserDto.EmailVerificationResponse(emailVerificationTokenInfo);
+        UserDto.RegistrationEmailVerificationResponse response = new UserDto.RegistrationEmailVerificationResponse(emailVerificationTokenInfo);
         return CommonResponse.success(response);
     }
 

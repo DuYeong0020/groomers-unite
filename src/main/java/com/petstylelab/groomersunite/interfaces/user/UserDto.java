@@ -16,7 +16,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class EmailVerificationRequest {
+    public static class RegistrationEmailVerificationRequest {
         @NotBlank(message = "email은 필수값입니다")
         @Email(message = "email 형식에 맞아야 합니다")
         private String email;
@@ -24,7 +24,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class EmailVerificationResponse {
+    public static class RegistrationEmailVerificationResponse {
         private final String token;
 
         private final String email;
@@ -37,7 +37,7 @@ public class UserDto {
 
         private final TokenType tokenType;
 
-        public EmailVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+        public RegistrationEmailVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
             this.token = emailVerificationTokenInfo.getToken();
             this.email = emailVerificationTokenInfo.getEmail();
             this.body = emailVerificationTokenInfo.getBody();
