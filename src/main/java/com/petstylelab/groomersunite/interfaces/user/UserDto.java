@@ -49,6 +49,39 @@ public class UserDto {
 
     @Getter
     @ToString
+    public static class AccountRecoveryVerificationRequest {
+        @NotBlank(message = "email은 필수값입니다")
+        @Email(message = "email 형식에 맞아야 합니다")
+        private String email;
+    }
+
+    @Getter
+    @ToString
+    public static class AccountRecoveryVerificationResponse {
+        private final String token;
+
+        private final String email;
+
+        private final String body;
+
+        private final LocalDateTime expiresAt;
+
+        private final LocalDateTime confirmedAt;
+
+        private final TokenType tokenType;
+
+        public AccountRecoveryVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+            this.token = emailVerificationTokenInfo.getToken();
+            this.email = emailVerificationTokenInfo.getEmail();
+            this.body = emailVerificationTokenInfo.getBody();
+            this.expiresAt = emailVerificationTokenInfo.getExpiresAt();
+            this.confirmedAt = emailVerificationTokenInfo.getConfirmedAt();
+            this.tokenType = emailVerificationTokenInfo.getTokenType();
+        }
+    }
+
+    @Getter
+    @ToString
     public static class RegisterRequest {
         @NotBlank(message = "loginId는 필수값입니다.")
         @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")

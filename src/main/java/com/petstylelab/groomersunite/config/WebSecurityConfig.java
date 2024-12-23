@@ -19,11 +19,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.ignoringRequestMatchers("/users", "/users/email-verification"))
+        return http.csrf(csrf -> csrf.ignoringRequestMatchers(
+                        "/users",
+                        "/users/email-verification",
+                        "/users/recovery-verification"
+                ))
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/users", "/users/email-verification").permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/users",
+                                "/users/email-verification",
+                                "/users/recovery-verification"
+                        ).permitAll()
                         .anyRequest().authenticated())
                 .build();
     }
