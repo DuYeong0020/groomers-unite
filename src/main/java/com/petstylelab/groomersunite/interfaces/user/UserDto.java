@@ -1,5 +1,7 @@
 package com.petstylelab.groomersunite.interfaces.user;
 
+import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenInfo;
+import com.petstylelab.groomersunite.domain.authentication.TokenType;
 import com.petstylelab.groomersunite.domain.user.Role;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
@@ -8,8 +10,75 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class UserDto {
+
+    @Getter
+    @ToString
+    public static class RegistrationEmailVerificationRequest {
+        @NotBlank(message = "email은 필수값입니다")
+        @Email(message = "email 형식에 맞아야 합니다")
+        private String email;
+    }
+
+    @Getter
+    @ToString
+    public static class RegistrationEmailVerificationResponse {
+        private final String token;
+
+        private final String email;
+
+        private final String body;
+
+        private final LocalDateTime expiresAt;
+
+        private final LocalDateTime confirmedAt;
+
+        private final TokenType tokenType;
+
+        public RegistrationEmailVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+            this.token = emailVerificationTokenInfo.getToken();
+            this.email = emailVerificationTokenInfo.getEmail();
+            this.body = emailVerificationTokenInfo.getBody();
+            this.expiresAt = emailVerificationTokenInfo.getExpiresAt();
+            this.confirmedAt = emailVerificationTokenInfo.getConfirmedAt();
+            this.tokenType = emailVerificationTokenInfo.getTokenType();
+        }
+    }
+
+    @Getter
+    @ToString
+    public static class AccountRecoveryVerificationRequest {
+        @NotBlank(message = "email은 필수값입니다")
+        @Email(message = "email 형식에 맞아야 합니다")
+        private String email;
+    }
+
+    @Getter
+    @ToString
+    public static class AccountRecoveryVerificationResponse {
+        private final String token;
+
+        private final String email;
+
+        private final String body;
+
+        private final LocalDateTime expiresAt;
+
+        private final LocalDateTime confirmedAt;
+
+        private final TokenType tokenType;
+
+        public AccountRecoveryVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+            this.token = emailVerificationTokenInfo.getToken();
+            this.email = emailVerificationTokenInfo.getEmail();
+            this.body = emailVerificationTokenInfo.getBody();
+            this.expiresAt = emailVerificationTokenInfo.getExpiresAt();
+            this.confirmedAt = emailVerificationTokenInfo.getConfirmedAt();
+            this.tokenType = emailVerificationTokenInfo.getTokenType();
+        }
+    }
 
     @Getter
     @ToString
@@ -62,6 +131,7 @@ public class UserDto {
             this.registrationDate = userInfo.getRegistrationDate();
         }
     }
+
     @Getter
     @ToString
     public static class ModifyUserRequest {
