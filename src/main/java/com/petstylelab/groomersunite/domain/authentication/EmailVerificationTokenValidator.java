@@ -6,4 +6,6 @@ public interface EmailVerificationTokenValidator {
 
     void checkSendRecoveryVerificationEmail(String email);
 
+    void checkVerifyRegistrationToken(String email, String token);
+
 }
