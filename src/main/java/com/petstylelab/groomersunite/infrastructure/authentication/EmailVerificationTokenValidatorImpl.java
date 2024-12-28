@@ -31,6 +31,12 @@ public class EmailVerificationTokenValidatorImpl implements EmailVerificationTok
         checkTokenNotExpired(emailVerificationToken);
     }
 
+    @Override
+    public void checkVerifyRecoveryToken(String email, String token) {
+        EmailVerificationToken emailVerificationToken = checkMatchEmailTokenTokenType(email, token, TokenType.ACCOUNT_RECOVERY);
+        checkTokenNotExpired(emailVerificationToken);
+    }
+
     private EmailVerificationToken checkMatchEmailTokenTokenType(String email, String token, TokenType tokenType) {
         return emailVerificationTokenReader
                 .findByEmailAndTokenAndTokenType(email, token, tokenType);

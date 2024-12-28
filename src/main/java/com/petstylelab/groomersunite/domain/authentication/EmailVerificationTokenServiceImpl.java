@@ -56,6 +56,10 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
 
     @Override
     public boolean verifyRecoveryToken(String email, String token) {
-        return false;
+        emailVerificationTokenValidator.checkVerifyRecoveryToken(email, token);
+        EmailVerificationToken emailVerificationToken =
+                emailVerificationTokenReader.findByEmailAndTokenAndTokenType(email, token, TokenType.ACCOUNT_RECOVERY);
+        emailVerificationToken.modifyConfirmedAt(LocalDateTime.now());
+        return true;
     }
 }
