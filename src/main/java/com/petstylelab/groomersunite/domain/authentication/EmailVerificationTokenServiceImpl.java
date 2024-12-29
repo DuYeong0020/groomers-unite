@@ -46,6 +46,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
 
 
     @Override
+    @Transactional
     public boolean verifyRegistrationToken(String email, String token) {
         emailVerificationTokenValidator.checkVerifyRegistrationToken(email, token);
         EmailVerificationToken emailVerificationToken =
@@ -55,6 +56,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
     }
 
     @Override
+    @Transactional
     public boolean verifyRecoveryToken(String email, String token) {
         emailVerificationTokenValidator.checkVerifyRecoveryToken(email, token);
         EmailVerificationToken emailVerificationToken =

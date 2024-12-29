@@ -34,6 +34,17 @@ public class UserApiController {
         return CommonResponse.success(response);
     }
 
+    @PostMapping("/users/email-verification/confirm")
+    public CommonResponse<Boolean> confirmRegistrationEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
+        boolean response = emailVerificationTokenService.verifyRegistrationToken(request.getEmail(), request.getToken());
+        return CommonResponse.success(response);
+
+    }
+    @PostMapping("/users/recovery-verification/confirm")
+    public CommonResponse<Boolean> confirmAccountRecoveryEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
+        boolean response = emailVerificationTokenService.verifyRecoveryToken(request.getEmail(), request.getToken());
+        return CommonResponse.success(response);
+    }
 
     @PostMapping("/users")
     public CommonResponse<UserDto.RegisterResponse> registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {

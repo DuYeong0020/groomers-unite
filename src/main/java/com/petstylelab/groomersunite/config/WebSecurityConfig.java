@@ -22,7 +22,9 @@ public class WebSecurityConfig {
         return http.csrf(csrf -> csrf.ignoringRequestMatchers(
                         "/users",
                         "/users/email-verification",
-                        "/users/recovery-verification"
+                        "/users/recovery-verification",
+                        "/users/email-verification/confirm",
+                        "/users/recovery-verification/confirm"
                 ))
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
@@ -31,7 +33,9 @@ public class WebSecurityConfig {
                                 HttpMethod.POST,
                                 "/users",
                                 "/users/email-verification",
-                                "/users/recovery-verification"
+                                "/users/recovery-verification",
+                                "/users/email-verification/confirm",
+                                "/users/recovery-verification/confirm"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .build();
