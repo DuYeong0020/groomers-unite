@@ -10,15 +10,6 @@ public interface UserService {
     UserInfo modifyPassword(UserCommand.ModifyPasswordRequest request);
 
     // 이메일로 유저 아이디 찾기
-    UserInfo findLoginIdByEmail(String email);
-
-    // 회원가입을 위한 인증 번호 보내기
-    boolean sendVerificationCodeForRegister(String email);
-
-    // 계정찾기를 위한 인증 번호 보내기
-    boolean sendVerificationCodeForFindAccount(String email);
-
-    // 인증 번호 확인하기
-    boolean confirmVerificationCode(String verificationCode);
+    UserInfo findUserId(UserCriteria.FindUserCriteria criteria);
 
 }

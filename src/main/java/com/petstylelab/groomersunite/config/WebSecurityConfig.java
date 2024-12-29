@@ -25,7 +25,8 @@ public class WebSecurityConfig {
                         "/users/email-verification",
                         "/users/recovery-verification",
                         "/users/email-verification/confirm",
-                        "/users/recovery-verification/confirm"
+                        "/users/recovery-verification/confirm",
+                        "/users/login-id"
                 ))
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
@@ -41,6 +42,10 @@ public class WebSecurityConfig {
                         .requestMatchers(
                                 HttpMethod.PATCH,
                                 "/users/password"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/users/login-id"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .build();

@@ -4,6 +4,7 @@ import com.petstylelab.groomersunite.domain.authentication.EmailVerificationToke
 import com.petstylelab.groomersunite.domain.authentication.TokenType;
 import com.petstylelab.groomersunite.domain.user.Role;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
+import com.petstylelab.groomersunite.domain.user.UserCriteria;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -236,6 +237,41 @@ public class UserDto {
         private final LocalDate registrationDate;
 
         public ModifyPasswordResponse(UserInfo userInfo) {
+            this.loginId = userInfo.getLoginId();
+            this.email = userInfo.getEmail();
+            this.nickname = userInfo.getNickname();
+            this.password = userInfo.getPassword();
+            this.role = userInfo.getRole();
+            this.registrationDate = userInfo.getRegistrationDate();
+        }
+    }
+
+    @Getter
+    @ToString
+    public static class FindLoginIdRequest {
+
+        @NotBlank(message = "email은 필수값입니다")
+        @Email(message = "email 형식에 맞아야 합니다")
+        private String email;
+
+        public UserCriteria.FindUserCriteria toCriteria() {
+            return UserCriteria.FindUserCriteria.builder()
+                    .email(email)
+                    .build();
+        }
+    }
+
+    @Getter
+    @ToString
+    public static class FindLoginIdResponse {
+        private final String loginId;
+        private final String email;
+        private final String nickname;
+        private final String password;
+        private final Role role;
+        private final LocalDate registrationDate;
+
+        public FindLoginIdResponse(UserInfo userInfo) {
             this.loginId = userInfo.getLoginId();
             this.email = userInfo.getEmail();
             this.nickname = userInfo.getNickname();
