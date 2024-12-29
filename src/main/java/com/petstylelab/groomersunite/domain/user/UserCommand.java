@@ -71,6 +71,7 @@ public class UserCommand {
         private final String newPassword;
         private final String confirmPassword;
 
+        @Builder
         public ModifyPasswordRequest(
                 String loginId,
                 String newPassword,
