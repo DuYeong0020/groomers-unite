@@ -8,7 +8,7 @@ public class UserCriteria {
 
     @Getter
     @ToString
-    public class FindUserCriteria {
+    public static class FindUserCriteria {
         private String email;
 
         @Builder
