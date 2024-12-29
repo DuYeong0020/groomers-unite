@@ -2,7 +2,7 @@ package com.petstylelab.groomersunite.domain.comment;
 
 import com.petstylelab.groomersunite.domain.BaseEntity;
 import com.petstylelab.groomersunite.domain.board.Board;
-import com.petstylelab.groomersunite.domain.rating.Rating;
+import com.petstylelab.groomersunite.domain.comment.rating.Rating;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

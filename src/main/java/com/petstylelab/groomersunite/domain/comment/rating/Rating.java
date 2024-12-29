@@ -1,4 +1,4 @@
-package com.petstylelab.groomersunite.domain.rating;
+package com.petstylelab.groomersunite.domain.comment.rating;
 
 import com.petstylelab.groomersunite.domain.BaseEntity;
 import jakarta.persistence.*;
