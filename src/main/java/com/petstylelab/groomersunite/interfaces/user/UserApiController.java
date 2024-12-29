@@ -4,14 +4,12 @@ import com.petstylelab.groomersunite.common.response.CommonResponse;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenInfo;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenService;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
+import com.petstylelab.groomersunite.domain.user.UserCriteria;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
 import com.petstylelab.groomersunite.domain.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,6 +65,15 @@ public class UserApiController {
         UserCommand.ModifyPasswordRequest command = request.toCommand();
         UserInfo userInfo = userService.modifyPassword(command);
         UserDto.ModifyPasswordResponse response = new UserDto.ModifyPasswordResponse(userInfo);
+        return CommonResponse.success(response);
+    }
+
+
+    @GetMapping("/users/login-id")
+    public CommonResponse<UserDto.FindLoginIdResponse> findLoginId(@RequestBody @Valid UserDto.FindLoginIdRequest request) {
+        UserCriteria.FindUserCriteria criteria = request.toCriteria();
+        UserInfo userInfo = userService.findUserId(criteria);
+        UserDto.FindLoginIdResponse response = new UserDto.FindLoginIdResponse(userInfo);
         return CommonResponse.success(response);
     }
 }

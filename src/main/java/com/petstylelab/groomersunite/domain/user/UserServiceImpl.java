@@ -48,22 +48,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo findLoginIdByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public boolean sendVerificationCodeForRegister(String email) {
-        return false;
-    }
-
-    @Override
-    public boolean sendVerificationCodeForFindAccount(String email) {
-        return false;
-    }
-
-    @Override
-    public boolean confirmVerificationCode(String verificationCode) {
-        return false;
+    public UserInfo findUserId(UserCriteria.FindUserCriteria criteria) {
+        User user = userReader.findByEmail(criteria.getEmail());
+        return new UserInfo(user);
     }
 }
