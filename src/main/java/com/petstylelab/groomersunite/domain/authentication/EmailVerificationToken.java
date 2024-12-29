@@ -50,6 +50,10 @@ public class EmailVerificationToken {
         this.user = user;
     }
 
+    public void modifyConfirmedAt(LocalDateTime confirmedAt) {
+        this.confirmedAt = confirmedAt;
+    }
+
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(this.expiresAt);
     }
