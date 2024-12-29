@@ -21,6 +21,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.ignoringRequestMatchers(
                         "/users",
+                        "/users/password",
                         "/users/email-verification",
                         "/users/recovery-verification",
                         "/users/email-verification/confirm",
@@ -36,6 +37,10 @@ public class WebSecurityConfig {
                                 "/users/recovery-verification",
                                 "/users/email-verification/confirm",
                                 "/users/recovery-verification/confirm"
+                        ).permitAll()
+                        .requestMatchers(
+                                HttpMethod.PATCH,
+                                "/users/password"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .build();

@@ -38,8 +38,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserInfo modifyPassword(UserCommand.ModifyPasswordRequest request) {
-        return null;
+        userValidator.checkModifyPassword(request);
+        User user = userReader.findByLoginId(request.getLoginId());
+        String encodedPassword = passwordEncoder.encode(request.getNewPassword());
+        user.modifyPassword(encodedPassword);
+        return new UserInfo(user);
     }
 
     @Override

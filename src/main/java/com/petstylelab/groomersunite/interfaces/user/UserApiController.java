@@ -38,8 +38,8 @@ public class UserApiController {
     public CommonResponse<Boolean> confirmRegistrationEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
         boolean response = emailVerificationTokenService.verifyRegistrationToken(request.getEmail(), request.getToken());
         return CommonResponse.success(response);
-
     }
+
     @PostMapping("/users/recovery-verification/confirm")
     public CommonResponse<Boolean> confirmAccountRecoveryEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
         boolean response = emailVerificationTokenService.verifyRecoveryToken(request.getEmail(), request.getToken());
@@ -51,7 +51,6 @@ public class UserApiController {
         UserCommand.RegisterUserRequest command = request.toCommand();
         UserInfo userInfo = userService.registerUser(command);
         UserDto.RegisterResponse response = new UserDto.RegisterResponse(userInfo);
-
         return CommonResponse.success(response);
     }
 
@@ -60,7 +59,14 @@ public class UserApiController {
         UserCommand.ModifyUserRequest command = request.toCommand();
         UserInfo userInfo = userService.modifyUser(command);
         UserDto.ModifyUserResponse response = new UserDto.ModifyUserResponse(userInfo);
+        return CommonResponse.success(response);
+    }
 
+    @PatchMapping("/users/password")
+    public CommonResponse<UserDto.ModifyPasswordResponse> modifyPassword(@RequestBody @Valid UserDto.ModifyPasswordRequest request) {
+        UserCommand.ModifyPasswordRequest command = request.toCommand();
+        UserInfo userInfo = userService.modifyPassword(command);
+        UserDto.ModifyPasswordResponse response = new UserDto.ModifyPasswordResponse(userInfo);
         return CommonResponse.success(response);
     }
 }

@@ -66,11 +66,12 @@ public class UserCommand {
 
     @Getter
     @ToString
-    public class ModifyPasswordRequest {
+    public static class ModifyPasswordRequest {
         private final String loginId;
         private final String newPassword;
         private final String confirmPassword;
 
+        @Builder
         public ModifyPasswordRequest(
                 String loginId,
                 String newPassword,
