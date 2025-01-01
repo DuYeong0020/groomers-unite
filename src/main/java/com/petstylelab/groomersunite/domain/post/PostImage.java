@@ -1,4 +1,4 @@
-package com.petstylelab.groomersunite.domain.board;
+package com.petstylelab.groomersunite.domain.post;
 
 import com.petstylelab.groomersunite.domain.BaseEntity;
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardImage extends BaseEntity {
+public class PostImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,6 @@ public class BoardImage extends BaseEntity {
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
