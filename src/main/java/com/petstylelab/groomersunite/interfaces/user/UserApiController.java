@@ -12,39 +12,40 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(("/users"))
 @RequiredArgsConstructor
 public class UserApiController {
 
     private final UserService userService;
     private final EmailVerificationTokenService emailVerificationTokenService;
 
-    @PostMapping("/users/email-verification")
+    @PostMapping("/email-verification")
     public CommonResponse<UserDto.RegistrationEmailVerificationResponse> sendRegistrationEmailVerification(@RequestBody @Valid UserDto.RegistrationEmailVerificationRequest request) {
         EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRegistrationVerificationEmail(request.getEmail());
         UserDto.RegistrationEmailVerificationResponse response = new UserDto.RegistrationEmailVerificationResponse(emailVerificationTokenInfo);
         return CommonResponse.success(response);
     }
 
-    @PostMapping("/users/recovery-verification")
+    @PostMapping("/recovery-verification")
     public CommonResponse<UserDto.AccountRecoveryVerificationResponse> sendAccountRecoveryEmailVerification(@RequestBody @Valid UserDto.AccountRecoveryVerificationRequest request) {
         EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRecoveryVerificationEmail(request.getEmail());
         UserDto.AccountRecoveryVerificationResponse response = new UserDto.AccountRecoveryVerificationResponse(emailVerificationTokenInfo);
         return CommonResponse.success(response);
     }
 
-    @PostMapping("/users/email-verification/confirm")
+    @PostMapping("/email-verification/confirm")
     public CommonResponse<Boolean> confirmRegistrationEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
         boolean response = emailVerificationTokenService.verifyRegistrationToken(request.getEmail(), request.getToken());
         return CommonResponse.success(response);
     }
 
-    @PostMapping("/users/recovery-verification/confirm")
+    @PostMapping("/recovery-verification/confirm")
     public CommonResponse<Boolean> confirmAccountRecoveryEmailToken(@RequestBody @Valid UserDto.EmailTokenConfirmationRequest request) {
         boolean response = emailVerificationTokenService.verifyRecoveryToken(request.getEmail(), request.getToken());
         return CommonResponse.success(response);
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public CommonResponse<UserDto.RegisterResponse> registerUser(@RequestBody @Valid UserDto.RegisterRequest request) {
         UserCommand.RegisterUserRequest command = request.toCommand();
         UserInfo userInfo = userService.registerUser(command);
@@ -52,7 +53,7 @@ public class UserApiController {
         return CommonResponse.success(response);
     }
 
-    @PatchMapping("/users")
+    @PatchMapping
     public CommonResponse<UserDto.ModifyUserResponse> modifyUser(@RequestBody @Valid UserDto.ModifyUserRequest request) {
         UserCommand.ModifyUserRequest command = request.toCommand();
         UserInfo userInfo = userService.modifyUser(command);
@@ -60,7 +61,7 @@ public class UserApiController {
         return CommonResponse.success(response);
     }
 
-    @PatchMapping("/users/password")
+    @PatchMapping("/password")
     public CommonResponse<UserDto.ModifyPasswordResponse> modifyPassword(@RequestBody @Valid UserDto.ModifyPasswordRequest request) {
         UserCommand.ModifyPasswordRequest command = request.toCommand();
         UserInfo userInfo = userService.modifyPassword(command);
@@ -69,7 +70,7 @@ public class UserApiController {
     }
 
 
-    @GetMapping("/users/login-id")
+    @GetMapping("/login-id")
     public CommonResponse<UserDto.FindLoginIdResponse> findLoginId(@RequestBody @Valid UserDto.FindLoginIdRequest request) {
         UserCriteria.FindUserCriteria criteria = request.toCriteria();
         UserInfo userInfo = userService.findUserId(criteria);
