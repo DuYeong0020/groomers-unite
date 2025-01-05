@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Getter
@@ -41,10 +40,6 @@ public class EmailVerificationToken {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
-
-    public static String generateToken() {
-        return UUID.randomUUID().toString();
-    }
 
     public void assignUser(User user) {
         this.user = user;

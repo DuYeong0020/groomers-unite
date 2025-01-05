@@ -6,6 +6,7 @@ import com.petstylelab.groomersunite.domain.authentication.TokenType;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 public class EmailVerificationTokenFactoryImpl implements EmailVerificationTokenFactory {
@@ -14,7 +15,7 @@ public class EmailVerificationTokenFactoryImpl implements EmailVerificationToken
     private static final long TOKEN_EXPIRATION_MINUTES = 5;
 
     public EmailVerificationToken createVerificationToken(String email, TokenType tokenType) {
-        String token = EmailVerificationToken.generateToken();
+        String token = UUID.randomUUID().toString();
         String body = VERIFICATION_EMAIL_BODY + token;
         LocalDateTime expiresAt = LocalDateTime.now().plusMinutes(TOKEN_EXPIRATION_MINUTES);
 
