@@ -20,4 +20,8 @@ public class PostImage extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public void modifyPost(Post post) {
+        this.post = post;
+    }
 }
