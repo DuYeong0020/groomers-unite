@@ -45,4 +45,15 @@ public class Post extends BaseEntity {
         images.add(image);
         image.modifyPost(this);
     }
+
+    @Builder
+    public Post(String title, String content, User user) {
+        if (!StringUtils.hasText(title)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(content)) throw new InvalidParameterException();
+        if (user == null) throw new InvalidParameterException();
+
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 }

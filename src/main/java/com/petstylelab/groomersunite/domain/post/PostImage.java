@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
+
+import java.security.InvalidParameterException;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,5 +30,15 @@ public class PostImage extends BaseEntity {
 
     public void modifyPost(Post post) {
         this.post = post;
+    }
+
+    public PostImage(String originalFileName, String storeFileName, String url) {
+        if (!StringUtils.hasText(originalFileName)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(storeFileName)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(url)) throw new InvalidParameterException();
+
+        this.originalFileName = originalFileName;
+        this.storeFileName = storeFileName;
+        this.url = url;
     }
 }

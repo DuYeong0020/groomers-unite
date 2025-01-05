@@ -1,6 +1,7 @@
 package com.petstylelab.groomersunite.domain.post;
 
 
+import com.petstylelab.groomersunite.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,15 +14,25 @@ public class PostCommand {
     @Getter
     @ToString
     public static class CreatePostRequest {
+        private final String loginId;
         private final String title;
         private final String content;
         private final List<MultipartFile> imageFiles;
 
         @Builder
-        public CreatePostRequest(String title, String content, List<MultipartFile> imageFiles) {
+        public CreatePostRequest(String loginId, String title, String content, List<MultipartFile> imageFiles) {
+            this.loginId = loginId;
             this.title = title;
             this.content = content;
             this.imageFiles = imageFiles;
+        }
+
+        public Post toEntity(User user) {
+            return Post.builder()
+                    .title(this.title)
+                    .content(this.content)
+                    .user(user)
+                    .build();
         }
     }
 }
