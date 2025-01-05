@@ -27,7 +27,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
         TokenType tokenType = TokenType.EMAIL_VERIFICATION;
         EmailVerificationToken initVerificationToken = emailVerificationTokenFactory.createVerificationToken(email, tokenType);
         EmailVerificationToken emailVerificationToken = emailVerificationTokenStore.storeEmailVerificationToken(initVerificationToken);
-        emailSender.sendEmail(email, emailVerificationToken.getSubject(), emailVerificationToken.getBody());
+        emailSender.sendEmail(emailVerificationToken.getEmail(), emailVerificationToken.getSubject(), emailVerificationToken.getBody());
         return new EmailVerificationTokenInfo(emailVerificationToken);
     }
 
@@ -40,7 +40,7 @@ public class EmailVerificationTokenServiceImpl implements EmailVerificationToken
         User user = userReader.findByEmail(email);
         EmailVerificationToken emailVerificationToken = emailVerificationTokenStore.storeEmailVerificationToken(initVerificationToken);
         emailVerificationToken.assignUser(user);
-        emailSender.sendEmail(email, emailVerificationToken.getSubject(), emailVerificationToken.getBody());
+        emailSender.sendEmail(emailVerificationToken.getEmail(), emailVerificationToken.getSubject(), emailVerificationToken.getBody());
         return new EmailVerificationTokenInfo(emailVerificationToken);
     }
 

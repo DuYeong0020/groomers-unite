@@ -17,7 +17,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class RegistrationEmailVerificationRequest {
+    public static class SendRegistrationEmailVerificationRequest {
         @NotBlank(message = "email은 필수값입니다")
         @Email(message = "email 형식에 맞아야 합니다")
         private String email;
@@ -25,7 +25,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class RegistrationEmailVerificationResponse {
+    public static class SendRegistrationEmailVerificationResponse {
         private final String token;
 
         private final String email;
@@ -38,7 +38,7 @@ public class UserDto {
 
         private final TokenType tokenType;
 
-        public RegistrationEmailVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+        public SendRegistrationEmailVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
             this.token = emailVerificationTokenInfo.getToken();
             this.email = emailVerificationTokenInfo.getEmail();
             this.body = emailVerificationTokenInfo.getBody();
@@ -61,7 +61,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class AccountRecoveryVerificationRequest {
+    public static class SendAccountRecoveryVerificationRequest {
         @NotBlank(message = "email은 필수값입니다")
         @Email(message = "email 형식에 맞아야 합니다")
         private String email;
@@ -69,7 +69,7 @@ public class UserDto {
 
     @Getter
     @ToString
-    public static class AccountRecoveryVerificationResponse {
+    public static class SendAccountRecoveryVerificationResponse {
         private final String token;
 
         private final String email;
@@ -82,7 +82,7 @@ public class UserDto {
 
         private final TokenType tokenType;
 
-        public AccountRecoveryVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
+        public SendAccountRecoveryVerificationResponse(EmailVerificationTokenInfo emailVerificationTokenInfo) {
             this.token = emailVerificationTokenInfo.getToken();
             this.email = emailVerificationTokenInfo.getEmail();
             this.body = emailVerificationTokenInfo.getBody();

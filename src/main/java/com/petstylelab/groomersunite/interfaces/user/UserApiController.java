@@ -20,16 +20,16 @@ public class UserApiController {
     private final EmailVerificationTokenService emailVerificationTokenService;
 
     @PostMapping("/email-verification")
-    public CommonResponse<UserDto.RegistrationEmailVerificationResponse> sendRegistrationEmailVerification(@RequestBody @Valid UserDto.RegistrationEmailVerificationRequest request) {
+    public CommonResponse<UserDto.SendRegistrationEmailVerificationResponse> sendRegistrationEmailVerification(@RequestBody @Valid UserDto.SendRegistrationEmailVerificationRequest request) {
         EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRegistrationVerificationEmail(request.getEmail());
-        UserDto.RegistrationEmailVerificationResponse response = new UserDto.RegistrationEmailVerificationResponse(emailVerificationTokenInfo);
+        UserDto.SendRegistrationEmailVerificationResponse response = new UserDto.SendRegistrationEmailVerificationResponse(emailVerificationTokenInfo);
         return CommonResponse.success(response);
     }
 
     @PostMapping("/recovery-verification")
-    public CommonResponse<UserDto.AccountRecoveryVerificationResponse> sendAccountRecoveryEmailVerification(@RequestBody @Valid UserDto.AccountRecoveryVerificationRequest request) {
+    public CommonResponse<UserDto.SendAccountRecoveryVerificationResponse> sendAccountRecoveryEmailVerification(@RequestBody @Valid UserDto.SendAccountRecoveryVerificationRequest request) {
         EmailVerificationTokenInfo emailVerificationTokenInfo = emailVerificationTokenService.sendRecoveryVerificationEmail(request.getEmail());
-        UserDto.AccountRecoveryVerificationResponse response = new UserDto.AccountRecoveryVerificationResponse(emailVerificationTokenInfo);
+        UserDto.SendAccountRecoveryVerificationResponse response = new UserDto.SendAccountRecoveryVerificationResponse(emailVerificationTokenInfo);
         return CommonResponse.success(response);
     }
 
