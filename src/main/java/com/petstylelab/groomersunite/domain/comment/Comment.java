@@ -1,8 +1,8 @@
 package com.petstylelab.groomersunite.domain.comment;
 
 import com.petstylelab.groomersunite.domain.BaseEntity;
-import com.petstylelab.groomersunite.domain.board.Board;
 import com.petstylelab.groomersunite.domain.comment.rating.Rating;
+import com.petstylelab.groomersunite.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,8 +24,8 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentImage> images = new ArrayList<>();

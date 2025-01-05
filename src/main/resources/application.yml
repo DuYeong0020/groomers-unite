@@ -5,6 +5,15 @@ spring:
 ---
 # 로컬 전용 설정
 spring:
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+      s3:
+        access-id: ENC(T9ocrGB99rtaHnqmbyIlZ+myrRe+3jOqIQ5jCUD0uxM=)
+        secret-key: ENC(fmwRP4kHVWVwKp5SGK7SD4lGaWRiI1mtpj+XtleRtASw6W1oAZnAvqWoKcSZ84Xkbijk7/pRbHM=)
+        region: ap-northeast-2
+        bucket-name: groomer-bucket
   config:
     activate:
       on-profile: local

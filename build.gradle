@@ -32,6 +32,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
     implementation 'org.jasypt:jasypt-spring4:1.9.3'
+    // Spring Cloud AWS for S3
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
+    // AWS SDK
+    implementation platform('software.amazon.awssdk:bom:2.17.99')
+    implementation 'software.amazon.awssdk:s3'
 }
 
 tasks.named('test') {
