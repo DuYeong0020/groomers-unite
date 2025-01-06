@@ -33,6 +33,12 @@ public class PostServiceImpl implements PostService {
     private String region;
 
     @Override
+    public PostInfo getPostById(Long postId) {
+        Post post = postReader.findById(postId);
+        return new PostInfo(post);
+    }
+
+    @Override
     @Transactional
     public PostInfo createPost(PostCommand.CreatePostRequest request) {
         User user = userReader.findByLoginId(request.getLoginId());
