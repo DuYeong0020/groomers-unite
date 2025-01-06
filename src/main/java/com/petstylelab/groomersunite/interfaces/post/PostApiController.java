@@ -23,4 +23,13 @@ public class PostApiController {
         PostDto.CreatePostResponse response = new PostDto.CreatePostResponse(postInfo);
         return CommonResponse.success(response);
     }
+
+    @PutMapping("/{postId}")
+    public CommonResponse<PostDto.UpdatePostResponse> updatePost(@PathVariable Long postId,
+                                                                 @ModelAttribute @Valid PostDto.UpdatePostRequest request) {
+        PostCommand.UpdatePostRequest command = request.toCommand();
+        PostInfo postInfo = postService.updatePost(command, postId);
+        PostDto.UpdatePostResponse response = new PostDto.UpdatePostResponse(postInfo);
+        return CommonResponse.success(response);
+    }
 }

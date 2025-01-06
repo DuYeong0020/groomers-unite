@@ -38,12 +38,29 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
+    public void modifyTitle(String title) {
+        if (StringUtils.hasText(title)) {
+            this.title = title;
+        }
+    }
+
+    public void modifyContent(String content) {
+        if (StringUtils.hasText(content)) {
+            this.content = content;
+        }
+    }
+
     public void addImage(PostImage image) {
         if (images == null) {
             images = new ArrayList<>();
         }
         images.add(image);
         image.modifyPost(this);
+    }
+
+    public void removeImage(PostImage image) {
+        images.remove(image);
+        image.modifyPost(null);
     }
 
     @Builder
