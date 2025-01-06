@@ -35,4 +35,23 @@ public class PostCommand {
                     .build();
         }
     }
+
+    @Getter
+    @ToString
+    public static class UpdatePostRequest {
+        private final String loginId;
+        private final String title;
+        private final String content;
+        private final List<String> deleteImageUrls;
+        private final List<MultipartFile> newImages;
+
+        @Builder
+        public UpdatePostRequest(String loginId, String title, String content, List<String> deleteImageUrls, List<MultipartFile> newImages) {
+            this.loginId = loginId;
+            this.title = title;
+            this.content = content;
+            this.deleteImageUrls = deleteImageUrls;
+            this.newImages = newImages;
+        }
+    }
 }
