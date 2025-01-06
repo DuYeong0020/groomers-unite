@@ -16,6 +16,22 @@ import java.util.List;
 public class PostDto {
 
     @Getter
+    @ToString
+    public static class GetPostResponse {
+        private final String title;
+        private final String content;
+        private final Long userId;
+        private final List<String> imageUrls;
+
+        public GetPostResponse(PostInfo postInfo) {
+            this.title = postInfo.getTitle();
+            this.content = postInfo.getContent();
+            this.userId = postInfo.getUserId();
+            this.imageUrls = postInfo.getImageUrls();
+        }
+    }
+
+    @Getter
     @Setter
     @ToString
     public static class CreatePostRequest {

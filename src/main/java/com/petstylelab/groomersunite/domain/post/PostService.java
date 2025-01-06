@@ -7,4 +7,7 @@ public interface PostService {
 
     // 게시글 수정
     PostInfo updatePost(PostCommand.UpdatePostRequest request, Long postId);
+
+    // 단일 게시글 조회
+    PostInfo getPostById(Long postId);
 }

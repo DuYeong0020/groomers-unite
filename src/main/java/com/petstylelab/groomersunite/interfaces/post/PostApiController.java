@@ -16,6 +16,13 @@ public class PostApiController {
 
     private final PostService postService;
 
+    @GetMapping("/{postId}")
+    public CommonResponse<PostDto.GetPostResponse> getPostById(@PathVariable Long postId) {
+        PostInfo postInfo = postService.getPostById(postId);
+        PostDto.GetPostResponse response = new PostDto.GetPostResponse(postInfo);
+        return CommonResponse.success(response);
+    }
+
     @PostMapping
     public CommonResponse<PostDto.CreatePostResponse> createPost(@ModelAttribute @Valid PostDto.CreatePostRequest request) {
         PostCommand.CreatePostRequest command = request.toCommand();
@@ -24,7 +31,7 @@ public class PostApiController {
         return CommonResponse.success(response);
     }
 
-    @PutMapping("/{postId}")
+    @PatchMapping("/{postId}")
     public CommonResponse<PostDto.UpdatePostResponse> updatePost(@PathVariable Long postId,
                                                                  @ModelAttribute @Valid PostDto.UpdatePostRequest request) {
         PostCommand.UpdatePostRequest command = request.toCommand();
