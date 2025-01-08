@@ -1,15 +1,19 @@
 package com.petstylelab.groomersunite.interfaces.post;
 
 import com.petstylelab.groomersunite.domain.post.PostCommand;
+import com.petstylelab.groomersunite.domain.post.PostCriteria;
 import com.petstylelab.groomersunite.domain.post.PostInfo;
+import com.petstylelab.groomersunite.domain.post.PostSummary;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +68,37 @@ public class PostDto {
 
     @Getter
     @ToString
-    public static class CreatePostResponse {
+    public static class GetPostsRequest {
 
+        private String keyword;
+
+        public PostCriteria.GetPosts toCriteria(Pageable pageable) {
+            return PostCriteria.GetPosts.builder()
+                    .keyword(keyword)
+                    .pageable(pageable)
+                    .build();
+        }
+    }
+
+    @Getter
+    @ToString
+    public static class GetPostsResponse {
+        private final Long id;
+        private final String title;
+        private final String createdBy;
+        private final LocalDateTime createdAt;
+
+        public GetPostsResponse(PostSummary postSummary) {
+            this.id = postSummary.getId();
+            this.title = postSummary.getTitle();
+            this.createdBy = postSummary.getCreatedBy();
+            this.createdAt = postSummary.getCreatedAt();
+        }
+    }
+
+    @Getter
+    @ToString
+    public static class CreatePostResponse {
         private final String title;
         private final String content;
         private final Long userId;

@@ -2,11 +2,11 @@ package com.petstylelab.groomersunite.interfaces.post;
 
 
 import com.petstylelab.groomersunite.common.response.CommonResponse;
-import com.petstylelab.groomersunite.domain.post.PostCommand;
-import com.petstylelab.groomersunite.domain.post.PostInfo;
-import com.petstylelab.groomersunite.domain.post.PostService;
+import com.petstylelab.groomersunite.domain.post.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +20,14 @@ public class PostApiController {
     public CommonResponse<PostDto.GetPostResponse> getPostById(@PathVariable Long postId) {
         PostInfo postInfo = postService.getPostById(postId);
         PostDto.GetPostResponse response = new PostDto.GetPostResponse(postInfo);
+        return CommonResponse.success(response);
+    }
+
+    @GetMapping
+    public CommonResponse<Page<PostDto.GetPostsResponse>> getPostsByCriteria(@Valid PostDto.GetPostsRequest request, Pageable pageable) {
+        PostCriteria.GetPosts criteria = request.toCriteria(pageable);
+        Page<PostSummary> postSummaryPage = postService.getPostsByCriteria(criteria);
+        Page<PostDto.GetPostsResponse> response = postSummaryPage.map(PostDto.GetPostsResponse::new);
         return CommonResponse.success(response);
     }
 
