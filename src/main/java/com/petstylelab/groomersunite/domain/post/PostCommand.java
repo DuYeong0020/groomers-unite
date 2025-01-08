@@ -42,15 +42,15 @@ public class PostCommand {
         private final String loginId;
         private final String title;
         private final String content;
-        private final List<String> deleteImageUrls;
+        private final List<String> deleteImageNames;
         private final List<MultipartFile> newImages;
 
         @Builder
-        public UpdatePostRequest(String loginId, String title, String content, List<String> deleteImageUrls, List<MultipartFile> newImages) {
+        public UpdatePostRequest(String loginId, String title, String content, List<String> deleteImageNames, List<MultipartFile> newImages) {
             this.loginId = loginId;
             this.title = title;
             this.content = content;
-            this.deleteImageUrls = deleteImageUrls;
+            this.deleteImageNames = deleteImageNames;
             this.newImages = newImages;
         }
     }
