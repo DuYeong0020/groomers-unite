@@ -118,4 +118,27 @@ public class PostServiceImpl implements PostService {
 
         return new PostInfo(post);
     }
+
+    @Override
+    public void deletePost(Long postId) {
+        Post post = postReader.findById(postId);
+        post.getComments()
+                .forEach(comment -> comment.getImages().forEach(
+                        image -> {
+                            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+                                    .bucket(bucketName)
+                                    .key(image.getStoreFileName())
+                                    .build();
+                            s3Client.deleteObject(deleteRequest);
+                        }));
+        post.getImages().forEach(image -> {
+            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(image.getStoreFileName())
+                    .build();
+            s3Client.deleteObject(deleteRequest);
+
+        });
+        postStore.deletePost(post);
+    }
 }
