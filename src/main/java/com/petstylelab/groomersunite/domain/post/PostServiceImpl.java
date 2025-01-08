@@ -4,6 +4,7 @@ import com.petstylelab.groomersunite.domain.user.User;
 import com.petstylelab.groomersunite.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +37,11 @@ public class PostServiceImpl implements PostService {
     public PostInfo getPostById(Long postId) {
         Post post = postReader.findById(postId);
         return new PostInfo(post);
+    }
+
+    @Override
+    public Page<PostSummary> getPostsByCriteria(PostCriteria.GetPosts request) {
+        return postReader.findByCriteria(request);
     }
 
     @Override
