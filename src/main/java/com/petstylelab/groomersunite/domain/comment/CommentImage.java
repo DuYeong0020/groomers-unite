@@ -14,6 +14,10 @@ public class CommentImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String originalFileName;
+
+    private String storeFileName;
+
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -15,4 +15,9 @@ public class PostJpaStore implements PostStore {
     public Post storePost(Post post) {
         return postJpaRepository.save(post);
     }
+
+    @Override
+    public void deletePost(Post post) {
+        postJpaRepository.delete(post);
+    }
 }

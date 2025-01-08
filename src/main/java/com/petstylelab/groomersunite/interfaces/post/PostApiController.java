@@ -47,4 +47,10 @@ public class PostApiController {
         PostDto.UpdatePostResponse response = new PostDto.UpdatePostResponse(postInfo);
         return CommonResponse.success(response);
     }
+
+    @DeleteMapping("/{postId}")
+    public CommonResponse<Boolean> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return CommonResponse.success(true);
+    }
 }
