@@ -79,15 +79,15 @@ public class PostServiceImpl implements PostService {
     public PostInfo updatePost(PostCommand.UpdatePostRequest request, Long postId) {
         Post post = postReader.findById(postId);
 
-        for (String deleteImageUrl : request.getDeleteImageUrls()) {
+        for (String deleteImageName : request.getDeleteImageNames()) {
             PostImage deleteImage = post.getImages().stream()
-                    .filter(image -> image.getUrl().equals(deleteImageUrl))
+                    .filter(image -> image.getStoreFileName().equals(deleteImageName))
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("삭제할 이미지를 찾을 수 없습니다."));
 
             DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
                     .bucket(bucketName)
-                    .key(deleteImageUrl)
+                    .key(deleteImageName)
                     .build();
             s3Client.deleteObject(deleteRequest);
             post.removeImage(deleteImage);

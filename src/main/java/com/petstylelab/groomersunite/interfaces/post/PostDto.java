@@ -130,7 +130,7 @@ public class PostDto {
         @Size(max = 5000, message = "content는 최대 5000자까지 작성 가능합니다.")
         private String content;
 
-        private List<String> deleteImageUrls;
+        private List<String> deleteImageNames;
 
         @Size(max = 5, message = "최대 5개의 이미지만 업로드할 수 있습니다.")
         private List<MultipartFile> newImages;
@@ -140,7 +140,7 @@ public class PostDto {
                     .loginId(loginId)
                     .title(title)
                     .content(content)
-                    .deleteImageUrls(deleteImageUrls == null ? new ArrayList<>() : deleteImageUrls)
+                    .deleteImageNames(deleteImageNames == null ? new ArrayList<>() : deleteImageNames)
                     .newImages(newImages  == null ? new ArrayList<>() : newImages)
                     .build();
         }
