@@ -3,6 +3,7 @@ package com.petstylelab.groomersunite.domain.comment.rating;
 import com.petstylelab.groomersunite.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,13 @@ public class Rating extends BaseEntity {
     private BigDecimal symmetry; // 대칭
 
     private BigDecimal balance; // 밸런스
+
+
+    @Builder
+    public Rating(BigDecimal completeness, BigDecimal finish, BigDecimal symmetry, BigDecimal balance) {
+        this.completeness = completeness;
+        this.finish = finish;
+        this.symmetry = symmetry;
+        this.balance = balance;
+    }
 }
