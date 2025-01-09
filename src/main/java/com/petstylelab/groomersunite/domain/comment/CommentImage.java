@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
+
+import java.security.InvalidParameterException;
 
 @Getter
 @Entity
@@ -23,4 +26,19 @@ public class CommentImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
+
+    public void modifyComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public CommentImage(String originalFileName, String storeFileName, String url) {
+        if (!StringUtils.hasText(originalFileName)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(storeFileName)) throw new InvalidParameterException();
+        if (!StringUtils.hasText(url)) throw new InvalidParameterException();
+
+        this.originalFileName = originalFileName;
+        this.storeFileName = storeFileName;
+        this.url = url;
+    }
 }
