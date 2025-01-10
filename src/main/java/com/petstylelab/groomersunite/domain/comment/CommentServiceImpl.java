@@ -37,6 +37,12 @@ public class CommentServiceImpl implements CommentService {
     private String region;
 
     @Override
+    public CommentInfo getCommentById(Long postId, Long commentId) {
+        Comment comment = commentReader.findById(commentId);
+        return new CommentInfo(comment);
+    }
+
+    @Override
     @Transactional
     public CommentInfo createComment(CommentCommand.CreateCommentRequest request) {
         Post post = postReader.findById(request.getPostId());

@@ -14,6 +14,13 @@ public class CommentApiController {
 
     private final CommentService commentService;
 
+    @GetMapping("/posts/{postId}/comments/{commentId}")
+    public CommonResponse<CommentDto.GetCommentResponse> getCommentById(@PathVariable Long postId, @PathVariable Long commentId) {
+        CommentInfo commentInfo = commentService.getCommentById(postId, commentId);
+        CommentDto.GetCommentResponse response = new CommentDto.GetCommentResponse(commentInfo);
+        return CommonResponse.success(response);
+    }
+
 
     @PostMapping("/posts/{postId}/comments")
     public CommonResponse<CommentDto.CreateCommentResponse> createComment(@PathVariable Long postId,

@@ -16,6 +16,47 @@ import java.util.Optional;
 public class CommentDto {
 
     @Getter
+    @ToString
+    public static class GetCommentResponse {
+
+        private final Long id;
+        private final Long userId;
+        private final Long postId;
+        private final String content;
+        private final List<String> imageUrls;
+        private final GetCommentResponse.RatingResponse rating;
+
+        public GetCommentResponse(CommentInfo commentInfo) {
+            this.id = commentInfo.getId();
+            this.userId = commentInfo.getUserId();
+            this.postId = commentInfo.getPostId();
+            this.content = commentInfo.getContent();
+            this.imageUrls = commentInfo.getImageUrls();
+            this.rating = Optional.ofNullable(commentInfo.getRating())
+                    .map(GetCommentResponse.RatingResponse::new)
+                    .orElse(null);
+        }
+
+        @Getter
+        @ToString
+        public static class RatingResponse {
+
+            private final BigDecimal completeness;
+            private final BigDecimal finish;
+            private final BigDecimal symmetry;
+            private final BigDecimal balance;
+
+            public RatingResponse(CommentInfo.RatingInfo ratingInfo) {
+                this.completeness = ratingInfo.getCompleteness();
+                this.finish = ratingInfo.getFinish();
+                this.symmetry = ratingInfo.getSymmetry();
+                this.balance = ratingInfo.getBalance();
+            }
+        }
+
+    }
+
+    @Getter
     @Setter
     @ToString
     public static class CreateCommentRequest {
@@ -43,6 +84,7 @@ public class CommentDto {
                     .rating(rating == null ? null : rating.toCommand())
                     .build();
         }
+
         @Getter
         @Setter
         @ToString
@@ -78,9 +120,11 @@ public class CommentDto {
             }
         }
     }
+
     @Getter
     @ToString
     public static class CreateCommentResponse {
+
         private final Long id;
         private final Long userId;
         private final Long postId;
@@ -104,11 +148,8 @@ public class CommentDto {
         public static class RatingResponse {
 
             private final BigDecimal completeness;
-
             private final BigDecimal finish;
-
             private final BigDecimal symmetry;
-
             private final BigDecimal balance;
 
             public RatingResponse(CommentInfo.RatingInfo ratingInfo) {
@@ -124,6 +165,7 @@ public class CommentDto {
     @Setter
     @ToString
     public static class UpdateCommentRequest {
+
         @NotBlank(message = "loginId는 필수값입니다.")
         @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")
         @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "loginId는 영문자와 숫자만 허용됩니다.")
@@ -147,7 +189,7 @@ public class CommentDto {
                     .commentId(commentId)
                     .content(content)
                     .deleteImageNames(deleteImageNames == null ? new ArrayList<>() : deleteImageNames)
-                    .newImages(newImages  == null ? new ArrayList<>() : newImages)
+                    .newImages(newImages == null ? new ArrayList<>() : newImages)
                     .rating(rating == null ? null : rating.toCommand())
                     .build();
         }
@@ -157,6 +199,7 @@ public class CommentDto {
         @Setter
         @ToString
         public static class RatingRequest {
+
             @DecimalMin(value = "0.0", inclusive = true, message = "completeness는 최소 0.0점이어야 합니다.")
             @DecimalMax(value = "5.0", inclusive = true, message = "completeness는 최대 5.0점이어야 합니다.")
             @Pattern(regexp = "^[0-4](\\.\\d)?|5\\.0$", message = "completeness는 0.1점 단위로 입력해야 합니다.")
@@ -191,6 +234,7 @@ public class CommentDto {
     @Getter
     @ToString
     public static class UpdateCommentResponse {
+
         private final Long id;
         private final Long userId;
         private final Long postId;
@@ -214,11 +258,8 @@ public class CommentDto {
         public static class RatingResponse {
 
             private final BigDecimal completeness;
-
             private final BigDecimal finish;
-
             private final BigDecimal symmetry;
-
             private final BigDecimal balance;
 
             public RatingResponse(CommentInfo.RatingInfo ratingInfo) {
