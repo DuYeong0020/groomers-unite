@@ -42,12 +42,41 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "rating_id")
     private Rating rating;
 
+    public void modifyRating(Rating rating) {
+        if(rating == null) {
+            removeRating();
+        } else if (this.rating == null) {
+            this.rating = rating;
+        } else {
+            this.rating.modifyFinish(rating.getFinish());
+            this.rating.modifyBalance(rating.getBalance());
+            this.rating.modifySymmetry(rating.getSymmetry());
+            this.rating.modifyCompleteness(rating.getCompleteness());
+        }
+    }
+
+    public void modifyContent(String content) {
+        if (StringUtils.hasText(content)) {
+            this.content = content;
+        }
+    }
+
     public void addImage(CommentImage image) {
         if (images == null) {
             images = new ArrayList<>();
         }
         images.add(image);
         image.modifyComment(this);
+    }
+
+    public void removeRating() {
+        this.rating = null;
+    }
+
+
+    public void removeImage(CommentImage image) {
+        images.remove(image);
+        image.modifyComment(null);
     }
 
     @Builder
