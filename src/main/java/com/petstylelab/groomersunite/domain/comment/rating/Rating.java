@@ -26,6 +26,21 @@ public class Rating extends BaseEntity {
 
     private BigDecimal balance; // 밸런스
 
+    public void modifyBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+    public void modifySymmetry(BigDecimal symmetry) {
+        this.symmetry = symmetry;
+    }
+
+    public void modifyFinish(BigDecimal finish) {
+        this.finish = finish;
+    }
+
+    public void modifyCompleteness(BigDecimal completeness) {
+        this.completeness = completeness;
+    }
 
     @Builder
     public Rating(BigDecimal completeness, BigDecimal finish, BigDecimal symmetry, BigDecimal balance) {
