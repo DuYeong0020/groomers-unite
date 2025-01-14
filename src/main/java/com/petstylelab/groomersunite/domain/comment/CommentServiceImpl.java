@@ -7,6 +7,7 @@ import com.petstylelab.groomersunite.domain.user.User;
 import com.petstylelab.groomersunite.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,11 @@ public class CommentServiceImpl implements CommentService {
     public CommentInfo getCommentById(Long postId, Long commentId) {
         Comment comment = commentReader.findById(commentId);
         return new CommentInfo(comment);
+    }
+
+    @Override
+    public Page<CommentDetail> getCommentsByCriteria(CommentCriteria.GetComments criteria) {
+        return commentReader.findByCriteria(criteria);
     }
 
     @Override

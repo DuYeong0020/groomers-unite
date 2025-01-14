@@ -1,11 +1,11 @@
 package com.petstylelab.groomersunite.interfaces.comment;
 
 import com.petstylelab.groomersunite.common.response.CommonResponse;
-import com.petstylelab.groomersunite.domain.comment.CommentCommand;
-import com.petstylelab.groomersunite.domain.comment.CommentInfo;
-import com.petstylelab.groomersunite.domain.comment.CommentService;
+import com.petstylelab.groomersunite.domain.comment.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +21,13 @@ public class CommentApiController {
         return CommonResponse.success(response);
     }
 
+    @GetMapping("/posts/{postId}/comments")
+    public CommonResponse<Page<CommentDto.GetCommentsResponse>> getCommentsByCriteria(@PathVariable Long postId, Pageable pageable) {
+        CommentCriteria.GetComments criteria = new CommentCriteria.GetComments(postId, pageable);
+        Page<CommentDetail> commentDetailPage = commentService.getCommentsByCriteria(criteria);
+        Page<CommentDto.GetCommentsResponse> response = commentDetailPage.map(CommentDto.GetCommentsResponse::new);
+        return CommonResponse.success(response);
+    }
 
     @PostMapping("/posts/{postId}/comments")
     public CommonResponse<CommentDto.CreateCommentResponse> createComment(@PathVariable Long postId,
