@@ -1,6 +1,7 @@
 package com.petstylelab.groomersunite.interfaces.comment;
 
 import com.petstylelab.groomersunite.domain.comment.CommentCommand;
+import com.petstylelab.groomersunite.domain.comment.CommentDetail;
 import com.petstylelab.groomersunite.domain.comment.CommentInfo;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +56,46 @@ public class CommentDto {
             }
         }
 
+    }
+
+    @Getter
+    @ToString
+    public static class GetCommentsResponse {
+        private final Long id;
+        private final String content;
+        private final Long userId;
+        private final List<String> imageUrls;
+        private final RatingResponse rating;
+
+        public GetCommentsResponse(CommentDetail commentDetail) {
+            this.id = commentDetail.getId();
+            this.content = commentDetail.getContent();
+            this.userId = commentDetail.getUserId();
+            if (commentDetail.getImageUrls() != null) {
+                this.imageUrls = Arrays.asList(commentDetail.getImageUrls().split(","));
+            } else {
+                this.imageUrls = new ArrayList<>();
+            }
+            this.rating = Optional.ofNullable(commentDetail.getRating())
+                    .map(GetCommentsResponse.RatingResponse::new)
+                    .orElse(null);
+        }
+
+        @Getter
+        @ToString
+        public static class RatingResponse {
+            private final BigDecimal completeness;
+            private final BigDecimal finish;
+            private final BigDecimal symmetry;
+            private final BigDecimal balance;
+
+            public RatingResponse(CommentDetail.RatingDetail ratingDetail) {
+                this.completeness = ratingDetail.getCompleteness();
+                this.finish = ratingDetail.getFinish();
+                this.symmetry = ratingDetail.getSymmetry();
+                this.balance = ratingDetail.getBalance();
+            }
+        }
     }
 
     @Getter
