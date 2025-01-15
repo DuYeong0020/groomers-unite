@@ -46,4 +46,10 @@ public class CommentApiController {
         CommentDto.UpdateCommentResponse response = new CommentDto.UpdateCommentResponse(commentInfo);
         return CommonResponse.success(response);
     }
+
+    @DeleteMapping("/{posts}/{postId}/comments/{commentId}")
+    public CommonResponse<Boolean> deletePost(@PathVariable Long postId, @PathVariable Long commentId) {
+        commentService.deleteComment(postId, commentId);
+        return CommonResponse.success(true);
+    }
 }
