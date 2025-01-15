@@ -126,4 +126,17 @@ public class CommentServiceImpl implements CommentService {
         }
         return new CommentInfo(comment);
     }
+
+    @Override
+    public void deleteComment(Long postId, Long commentId) {
+        Comment comment = commentReader.findById(commentId);
+        comment.getImages().forEach(image -> {
+            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(image.getStoreFileName())
+                    .build();
+            s3Client.deleteObject(deleteRequest);
+        });
+        commentStore.deleteComment(comment);
+    }
 }

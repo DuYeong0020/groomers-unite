@@ -15,4 +15,9 @@ public class CommentJpaStore implements CommentStore {
     public Comment storeComment(Comment comment) {
         return commentJpaRepository.save(comment);
     }
+
+    @Override
+    public void deleteComment(Comment comment) {
+        commentJpaRepository.delete(comment);
+    }
 }

@@ -12,4 +12,5 @@ public interface CommentService {
 
     CommentInfo updateComment(CommentCommand.UpdateCommentRequest request);
 
+    void deleteComment(Long postId, Long commentId);
 }
