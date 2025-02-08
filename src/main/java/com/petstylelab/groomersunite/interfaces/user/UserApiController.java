@@ -4,7 +4,6 @@ import com.petstylelab.groomersunite.common.response.CommonResponse;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenInfo;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenService;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
-import com.petstylelab.groomersunite.domain.user.UserCriteria;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
 import com.petstylelab.groomersunite.domain.user.UserService;
 import jakarta.validation.Valid;
@@ -72,8 +71,8 @@ public class UserApiController {
 
     @GetMapping("/login-id")
     public CommonResponse<UserDto.FindLoginIdResponse> findLoginId(@RequestBody @Valid UserDto.FindLoginIdRequest request) {
-        UserCriteria.FindUserCriteria criteria = request.toCriteria();
-        UserInfo userInfo = userService.findUserId(criteria);
+        String email = request.getEmail();
+        UserInfo userInfo = userService.findUserByEmail(email);
         UserDto.FindLoginIdResponse response = new UserDto.FindLoginIdResponse(userInfo);
         return CommonResponse.success(response);
     }

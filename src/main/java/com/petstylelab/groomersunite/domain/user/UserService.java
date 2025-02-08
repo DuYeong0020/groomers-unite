@@ -9,7 +9,8 @@ public interface UserService {
     // 비밀번호 수정
     UserInfo modifyPassword(UserCommand.ModifyPasswordRequest request);
 
-    // 이메일로 유저 아이디 찾기
-    UserInfo findUserId(UserCriteria.FindUserCriteria criteria);
+    UserInfo findUserByEmail(String email);
+
+    UserInfo authenticateUser(UserCommand.AuthenticateUserRequest request);
 
 }

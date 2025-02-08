@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Getter
 public class UserInfo {
+    private final Long id;
     private final String loginId;
     private final String email;
     private final String password;
@@ -14,6 +15,7 @@ public class UserInfo {
     private final LocalDate registrationDate;
 
     public UserInfo(User user) {
+        this.id = user.getId();
         this.loginId = user.getLoginId();
         this.email = user.getEmail();
         this.password = user.getPassword();

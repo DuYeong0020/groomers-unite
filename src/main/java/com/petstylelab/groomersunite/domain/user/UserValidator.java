@@ -7,4 +7,6 @@ public interface UserValidator {
     void checkModifyUser(UserCommand.ModifyUserRequest request);
 
     void checkModifyPassword(UserCommand.ModifyPasswordRequest request);
+
+    void checkAuthenticateUser(UserCommand.AuthenticateUserRequest request);
 }

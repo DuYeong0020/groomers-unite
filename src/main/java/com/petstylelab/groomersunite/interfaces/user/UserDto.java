@@ -4,7 +4,6 @@ import com.petstylelab.groomersunite.domain.authentication.EmailVerificationToke
 import com.petstylelab.groomersunite.domain.authentication.TokenType;
 import com.petstylelab.groomersunite.domain.user.Role;
 import com.petstylelab.groomersunite.domain.user.UserCommand;
-import com.petstylelab.groomersunite.domain.user.UserCriteria;
 import com.petstylelab.groomersunite.domain.user.UserInfo;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -254,11 +253,6 @@ public class UserDto {
         @Email(message = "email 형식에 맞아야 합니다")
         private String email;
 
-        public UserCriteria.FindUserCriteria toCriteria() {
-            return UserCriteria.FindUserCriteria.builder()
-                    .email(email)
-                    .build();
-        }
     }
 
     @Getter

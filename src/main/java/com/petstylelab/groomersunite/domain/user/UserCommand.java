@@ -82,4 +82,17 @@ public class UserCommand {
             this.confirmPassword = confirmPassword;
         }
     }
+
+    @Getter
+    @ToString
+    public static class AuthenticateUserRequest {
+        private final String loginId;
+        private final String password;
+
+        @Builder
+        public AuthenticateUserRequest(String loginId, String password) {
+            this.loginId = loginId;
+            this.password = password;
+        }
+    }
 }

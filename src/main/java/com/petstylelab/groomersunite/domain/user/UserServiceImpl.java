@@ -48,8 +48,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo findUserId(UserCriteria.FindUserCriteria criteria) {
-        User user = userReader.findByEmail(criteria.getEmail());
+    public UserInfo findUserByEmail(String email) {
+        User user = userReader.findByEmail(email);
+        return new UserInfo(user);
+    }
+
+    @Override
+    public UserInfo authenticateUser(UserCommand.AuthenticateUserRequest request) {
+        userValidator.checkAuthenticateUser(request);
+        User user = userReader.findByLoginId(request.getLoginId());
         return new UserInfo(user);
     }
 }

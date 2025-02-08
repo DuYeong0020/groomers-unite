@@ -34,6 +34,11 @@ public class UserValidatorImpl implements UserValidator {
         checkPasswordSame(request.getNewPassword(), request.getConfirmPassword());
     }
 
+    @Override
+    public void checkAuthenticateUser(UserCommand.AuthenticateUserRequest request) {
+        checkMatchLoginIdPassword(request.getLoginId(), request.getPassword());
+    }
+
     private void checkPasswordSame(String newPassword, String confirmPassword) {
         if (!newPassword.equals(confirmPassword)) {
             throw new RuntimeException("새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
