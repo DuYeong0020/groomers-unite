@@ -1,5 +1,6 @@
 package com.petstylelab.groomersunite.interfaces.comment;
 
+import com.petstylelab.groomersunite.common.argumentresolver.Login;
 import com.petstylelab.groomersunite.common.response.CommonResponse;
 import com.petstylelab.groomersunite.domain.comment.*;
 import jakarta.validation.Valid;
@@ -30,9 +31,9 @@ public class CommentApiController {
     }
 
     @PostMapping("/posts/{postId}/comments")
-    public CommonResponse<CommentDto.CreateCommentResponse> createComment(@PathVariable Long postId,
+    public CommonResponse<CommentDto.CreateCommentResponse> createComment(@Login Long userId, @PathVariable Long postId,
                                                                           @ModelAttribute @Valid CommentDto.CreateCommentRequest request) {
-        CommentCommand.CreateCommentRequest command = request.toCommand(postId);
+        CommentCommand.CreateCommentRequest command = request.toCommand(userId, postId);
         CommentInfo commentInfo = commentService.createComment(command);
         CommentDto.CreateCommentResponse response = new CommentDto.CreateCommentResponse(commentInfo);
         return CommonResponse.success(response);

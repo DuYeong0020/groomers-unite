@@ -1,5 +1,6 @@
 package com.petstylelab.groomersunite.interfaces.user;
 
+import com.petstylelab.groomersunite.common.argumentresolver.Login;
 import com.petstylelab.groomersunite.common.response.CommonResponse;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenInfo;
 import com.petstylelab.groomersunite.domain.authentication.EmailVerificationTokenService;
@@ -53,8 +54,8 @@ public class UserApiController {
     }
 
     @PatchMapping
-    public CommonResponse<UserDto.ModifyUserResponse> modifyUser(@RequestBody @Valid UserDto.ModifyUserRequest request) {
-        UserCommand.ModifyUserRequest command = request.toCommand();
+    public CommonResponse<UserDto.ModifyUserResponse> modifyUser(@Login Long userId, @RequestBody @Valid UserDto.ModifyUserRequest request) {
+        UserCommand.ModifyUserRequest command = request.toCommand(userId);
         UserInfo userInfo = userService.modifyUser(command);
         UserDto.ModifyUserResponse response = new UserDto.ModifyUserResponse(userInfo);
         return CommonResponse.success(response);

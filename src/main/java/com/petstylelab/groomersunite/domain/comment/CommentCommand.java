@@ -16,15 +16,15 @@ public class CommentCommand {
     @Getter
     @ToString
     public static class CreateCommentRequest {
-        private final String loginId;
+        private final Long userId;
         private final Long postId;
         private final String content;
         private final List<MultipartFile> imageFiles;
         private final RatingRequest rating;
 
         @Builder
-        public CreateCommentRequest(String loginId, Long postId, String content, List<MultipartFile> imageFiles, RatingRequest rating) {
-            this.loginId = loginId;
+        public CreateCommentRequest(Long userId, Long postId, String content, List<MultipartFile> imageFiles, RatingRequest rating) {
+            this.userId = userId;
             this.postId = postId;
             this.content = content;
             this.imageFiles = imageFiles;
@@ -69,7 +69,6 @@ public class CommentCommand {
     @Getter
     @ToString
     public static class UpdateCommentRequest {
-        private final String loginId;
         private final Long postId;
         private final Long commentId;
         private final String content;
@@ -78,8 +77,7 @@ public class CommentCommand {
         private final RatingRequest rating;
 
         @Builder
-        public UpdateCommentRequest(String loginId, Long postId, long commentId, String content, List<String> deleteImageNames, List<MultipartFile> newImages, RatingRequest rating) {
-            this.loginId = loginId;
+        public UpdateCommentRequest(Long postId, long commentId, String content, List<String> deleteImageNames, List<MultipartFile> newImages, RatingRequest rating) {
             this.postId = postId;
             this.commentId = commentId;
             this.content = content;

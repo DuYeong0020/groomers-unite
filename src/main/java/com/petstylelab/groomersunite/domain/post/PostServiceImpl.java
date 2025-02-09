@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional
     public PostInfo createPost(PostCommand.CreatePostRequest request) {
-        User user = userReader.findByLoginId(request.getLoginId());
+        User user = userReader.findById(request.getUserId());
         Post initPost = request.toEntity(user);
 
         for (MultipartFile imageFile : request.getImageFiles()) {

@@ -13,6 +13,12 @@ public class UserJpaReader implements UserReader {
     private final UserJpaRepository userJpaRepository;
 
     @Override
+    public User findById(Long id) {
+        return userJpaRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
     public User findByLoginId(String loginId) {
         return userJpaRepository.findByLoginId(loginId)
                 .orElseThrow(EntityNotFoundException::new);

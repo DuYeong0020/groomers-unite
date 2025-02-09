@@ -45,20 +45,20 @@ public class UserCommand {
     @Getter
     @ToString
     public static class ModifyUserRequest {
+        private final Long userId;
         private final String nickname;
-        private final String loginId;
         private final String currentPassword;
         private final String newPassword;
 
         @Builder
         public ModifyUserRequest(
                 String nickname,
-                String loginId,
+                Long userId,
                 String currentPassword,
                 String newPassword
         ) {
             this.nickname = nickname;
-            this.loginId = loginId;
+            this.userId = userId;
             this.currentPassword = currentPassword;
             this.newPassword = newPassword;
         }
@@ -67,17 +67,17 @@ public class UserCommand {
     @Getter
     @ToString
     public static class ModifyPasswordRequest {
-        private final String loginId;
+        private final String email;
         private final String newPassword;
         private final String confirmPassword;
 
         @Builder
         public ModifyPasswordRequest(
-                String loginId,
+                String email,
                 String newPassword,
                 String confirmPassword
         ) {
-            this.loginId = loginId;
+            this.email = email;
             this.newPassword = newPassword;
             this.confirmPassword = confirmPassword;
         }

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserInfo modifyUser(UserCommand.ModifyUserRequest request) {
         userValidator.checkModifyUser(request);
-        User user = userReader.findByLoginId(request.getLoginId());
+        User user = userReader.findById(request.getUserId());
         String encodedPassword = passwordEncoder.encode(request.getCurrentPassword());
         user.modifyNickname(request.getNickname());
         user.modifyPassword(encodedPassword);
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserInfo modifyPassword(UserCommand.ModifyPasswordRequest request) {
         userValidator.checkModifyPassword(request);
-        User user = userReader.findByLoginId(request.getLoginId());
+        User user = userReader.findByEmail(request.getEmail());
         String encodedPassword = passwordEncoder.encode(request.getNewPassword());
         user.modifyPassword(encodedPassword);
         return new UserInfo(user);

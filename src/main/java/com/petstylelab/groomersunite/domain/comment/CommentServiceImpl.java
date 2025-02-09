@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentInfo createComment(CommentCommand.CreateCommentRequest request) {
         Post post = postReader.findById(request.getPostId());
-        User user = userReader.findByLoginId(request.getLoginId());
+        User user = userReader.findById(request.getUserId());
 
         Comment initComment = request.toEntity(post, user);
 

@@ -15,6 +15,7 @@ public class UserValidatorImpl implements UserValidator {
     private final UserJpaRepository userJpaRepository;
     private final UserReader userReader;
     private final PasswordEncoder passwordEncoder;
+    private final UserJpaReader userJpaReader;
 
     @Override
     public void checkRegisterUser(UserCommand.RegisterUserRequest request) {
@@ -25,7 +26,7 @@ public class UserValidatorImpl implements UserValidator {
 
     @Override
     public void checkModifyUser(UserCommand.ModifyUserRequest request) {
-        checkMatchLoginIdPassword(request.getLoginId(), request.getCurrentPassword());
+        checkMatchPassword(request.getUserId(), request.getCurrentPassword());
         checkPasswordNotSame(request.getCurrentPassword(), request.getNewPassword());
     }
 
@@ -37,6 +38,13 @@ public class UserValidatorImpl implements UserValidator {
     @Override
     public void checkAuthenticateUser(UserCommand.AuthenticateUserRequest request) {
         checkMatchLoginIdPassword(request.getLoginId(), request.getPassword());
+    }
+
+    private void checkMatchPassword(Long userId, String currentPassword) {
+        User user = userJpaReader.findById(userId);
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
     }
 
     private void checkPasswordSame(String newPassword, String confirmPassword) {
@@ -72,6 +80,7 @@ public class UserValidatorImpl implements UserValidator {
             throw new RuntimeException("현재 비밀번호와 새 비밀번호는 동일할 수 없습니다.");
         }
     }
+
 
     private void checkMatchLoginIdPassword(String loginId, String password) {
         User user = userReader.findByLoginId(loginId);

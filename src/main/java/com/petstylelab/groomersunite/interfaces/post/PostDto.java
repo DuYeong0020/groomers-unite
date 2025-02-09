@@ -40,11 +40,6 @@ public class PostDto {
     @ToString
     public static class CreatePostRequest {
 
-        @NotBlank(message = "loginId는 필수값입니다.")
-        @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "loginId는 영문자와 숫자만 허용됩니다.")
-        private String loginId;
-
         @NotBlank(message = "title은 필수값입니다.")
         @Size(min = 1, max = 20, message = "title은 최소 1자, 최대 20자이어야 합니다.")
         private String title;
@@ -56,9 +51,9 @@ public class PostDto {
         @Size(max = 5, message = "최대 5개의 이미지만 업로드할 수 있습니다.")
         private List<MultipartFile> images;
 
-        public PostCommand.CreatePostRequest toCommand() {
+        public PostCommand.CreatePostRequest toCommand(Long userId) {
             return PostCommand.CreatePostRequest.builder()
-                    .loginId(loginId)
+                    .userId(userId)
                     .title(title)
                     .content(content)
                     .imageFiles(images == null ? new ArrayList<>() : images)
@@ -117,11 +112,6 @@ public class PostDto {
     @ToString
     public static class UpdatePostRequest {
 
-        @NotBlank(message = "loginId는 필수값입니다.")
-        @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "loginId는 영문자와 숫자만 허용됩니다.")
-        private String loginId;
-
         @NotBlank(message = "title은 필수값입니다.")
         @Size(min = 1, max = 20, message = "title은 최소 1자, 최대 20자이어야 합니다.")
         private String title;
@@ -137,7 +127,6 @@ public class PostDto {
 
         public PostCommand.UpdatePostRequest toCommand() {
             return PostCommand.UpdatePostRequest.builder()
-                    .loginId(loginId)
                     .title(title)
                     .content(content)
                     .deleteImageNames(deleteImageNames == null ? new ArrayList<>() : deleteImageNames)

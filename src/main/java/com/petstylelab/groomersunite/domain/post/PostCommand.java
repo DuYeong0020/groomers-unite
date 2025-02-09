@@ -14,14 +14,14 @@ public class PostCommand {
     @Getter
     @ToString
     public static class CreatePostRequest {
-        private final String loginId;
+        private final Long userId;
         private final String title;
         private final String content;
         private final List<MultipartFile> imageFiles;
 
         @Builder
-        public CreatePostRequest(String loginId, String title, String content, List<MultipartFile> imageFiles) {
-            this.loginId = loginId;
+        public CreatePostRequest(Long userId, String title, String content, List<MultipartFile> imageFiles) {
+            this.userId = userId;
             this.title = title;
             this.content = content;
             this.imageFiles = imageFiles;
@@ -39,15 +39,13 @@ public class PostCommand {
     @Getter
     @ToString
     public static class UpdatePostRequest {
-        private final String loginId;
         private final String title;
         private final String content;
         private final List<String> deleteImageNames;
         private final List<MultipartFile> newImages;
 
         @Builder
-        public UpdatePostRequest(String loginId, String title, String content, List<String> deleteImageNames, List<MultipartFile> newImages) {
-            this.loginId = loginId;
+        public UpdatePostRequest(String title, String content, List<String> deleteImageNames, List<MultipartFile> newImages) {
             this.title = title;
             this.content = content;
             this.deleteImageNames = deleteImageNames;

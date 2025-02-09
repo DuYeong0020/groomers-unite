@@ -103,11 +103,6 @@ public class CommentDto {
     @ToString
     public static class CreateCommentRequest {
 
-        @NotBlank(message = "loginId는 필수값입니다.")
-        @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "loginId는 영문자와 숫자만 허용됩니다.")
-        private String loginId;
-
         @NotBlank(message = "content는 필수값입니다.")
         @Size(max = 5000, message = "content는 최대 5000자까지 작성 가능합니다.")
         private String content;
@@ -117,9 +112,9 @@ public class CommentDto {
 
         private RatingRequest rating;
 
-        public CommentCommand.CreateCommentRequest toCommand(Long postId) {
+        public CommentCommand.CreateCommentRequest toCommand(Long userId, Long postId) {
             return CommentCommand.CreateCommentRequest.builder()
-                    .loginId(loginId)
+                    .userId(userId)
                     .postId(postId)
                     .content(content)
                     .imageFiles(images == null ? new ArrayList<>() : images)
@@ -208,11 +203,6 @@ public class CommentDto {
     @ToString
     public static class UpdateCommentRequest {
 
-        @NotBlank(message = "loginId는 필수값입니다.")
-        @Size(min = 5, max = 15, message = "loginId는 최소 5자, 최대 15자이어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "loginId는 영문자와 숫자만 허용됩니다.")
-        private String loginId;
-
         @NotBlank(message = "content는 필수값입니다.")
         @Size(max = 5000, message = "content는 최대 5000자까지 작성 가능합니다.")
         private String content;
@@ -226,7 +216,6 @@ public class CommentDto {
 
         public CommentCommand.UpdateCommentRequest toCommand(Long postId, Long commentId) {
             return CommentCommand.UpdateCommentRequest.builder()
-                    .loginId(loginId)
                     .postId(postId)
                     .commentId(commentId)
                     .content(content)

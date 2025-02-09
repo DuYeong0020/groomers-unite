@@ -1,6 +1,7 @@
 package com.petstylelab.groomersunite.interfaces.post;
 
 
+import com.petstylelab.groomersunite.common.argumentresolver.Login;
 import com.petstylelab.groomersunite.common.response.CommonResponse;
 import com.petstylelab.groomersunite.domain.post.*;
 import jakarta.validation.Valid;
@@ -32,8 +33,8 @@ public class PostApiController {
     }
 
     @PostMapping
-    public CommonResponse<PostDto.CreatePostResponse> createPost(@ModelAttribute @Valid PostDto.CreatePostRequest request) {
-        PostCommand.CreatePostRequest command = request.toCommand();
+    public CommonResponse<PostDto.CreatePostResponse> createPost(@Login Long userId, @ModelAttribute @Valid PostDto.CreatePostRequest request) {
+        PostCommand.CreatePostRequest command = request.toCommand(userId);
         PostInfo postInfo = postService.createPost(command);
         PostDto.CreatePostResponse response = new PostDto.CreatePostResponse(postInfo);
         return CommonResponse.success(response);
