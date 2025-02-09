@@ -15,8 +15,6 @@
 - 면처리: 컷이 얼마나 정교하고 깨끗한가
 - 대칭: 기준에 맞춰 좌우 대칭이 잘 이루어졌는가
 - 밸런스: 이상적인 비율에 맞춰 균형감 있게 컷이 되었는가
-- 이 플랫폼을 통해 미용사들이 서로 성장하고, 더욱 수준 높은 미용 기술을 발전시킬 수 있기를 기대합니다.
-
 
 ### 주요 기능
 - 사용자 가입 및 관리
@@ -28,6 +26,18 @@
 - **Database**: MySQL
 - **Infra**: AWS S3, EC2
 
+### 실행 방법
+#### 1. 프로젝트 클론
+```bash
+git clone https://github.com/DuYeong0020/groomers-unite
+cd project
+```
+#### 2. IntelliJ 실행 시  환경 변수 설정 (Jasypt 암호화 키)
+Run/Debug Configurations 창을 엽니다.  
+Environment Variables 항목에 JASYPT_ENCRYPTOR_PASSWORD 추가
+
+#### 3. Mysql 설정
+MySQL을 사용한다면, groomers_unite 데이터베이스를 미리 생성해야 합니다.
+
 ### ERD
-<iframe width="600" height="336" src="https://www.erdcloud.com/p/5XGrSXJ4QTtqCvGTt" frameborder="0" allowfullscreen></iframe>
-![ERD](https://www.erdcloud.com/p/5XGrSXJ4QTtqCvGTt)
+https://www.erdcloud.com/p/5XGrSXJ4QTtqCvGTt
