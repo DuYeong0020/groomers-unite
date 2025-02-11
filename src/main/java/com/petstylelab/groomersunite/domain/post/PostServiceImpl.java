@@ -1,19 +1,13 @@
 package com.petstylelab.groomersunite.domain.post;
 
+import com.petstylelab.groomersunite.domain.file.FileUploader;
 import com.petstylelab.groomersunite.domain.user.User;
 import com.petstylelab.groomersunite.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-
-import java.io.IOException;
 
 import static com.petstylelab.groomersunite.common.util.FileNameUtil.createStoreFileName;
 
@@ -25,13 +19,7 @@ public class PostServiceImpl implements PostService {
     private final PostReader postReader;
     private final UserReader userReader;
     private final PostStore postStore;
-    private final S3Client s3Client;
-
-    @Value("${spring.cloud.aws.s3.bucket-name}")
-    private String bucketName;
-
-    @Value("${spring.cloud.aws.s3.region}")
-    private String region;
+    private final FileUploader fileUploader;
 
     @Override
     public PostInfo getPostById(Long postId) {
@@ -52,20 +40,13 @@ public class PostServiceImpl implements PostService {
 
         for (MultipartFile imageFile : request.getImageFiles()) {
             if (!imageFile.isEmpty()) {
+                System.out.println("imageFile = " + imageFile);
                 String originalFilename = imageFile.getOriginalFilename();
                 String storeFileName = createStoreFileName(originalFilename);
 
-                try {
-                    s3Client.putObject(
-                            PutObjectRequest.builder()
-                                    .bucket(bucketName)
-                                    .key(storeFileName)
-                                    .build(),
-                            RequestBody.fromInputStream(imageFile.getInputStream(), imageFile.getSize()));
-                } catch (IOException e) {
-                    throw new IllegalStateException("S3 파일 업로드 중 문제가 발생했습니다.", e);
-                }
-                String fileUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, storeFileName);
+                fileUploader.saveFile(imageFile, storeFileName);
+                String fileUrl = fileUploader.getFileUrl(storeFileName);
+
                 PostImage postImage = new PostImage(originalFilename, storeFileName, fileUrl);
                 initPost.addImage(postImage);
             }
@@ -85,11 +66,8 @@ public class PostServiceImpl implements PostService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("삭제할 이미지를 찾을 수 없습니다."));
 
-            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(deleteImageName)
-                    .build();
-            s3Client.deleteObject(deleteRequest);
+            fileUploader.deleteFile(deleteImageName);
+
             post.removeImage(deleteImage);
         }
 
@@ -97,17 +75,10 @@ public class PostServiceImpl implements PostService {
             if (!newImage.isEmpty()) {
                 String originalFilename = newImage.getOriginalFilename();
                 String storeFileName = createStoreFileName(originalFilename);
-                try {
-                    s3Client.putObject(
-                            PutObjectRequest.builder()
-                                    .bucket(bucketName)
-                                    .key(storeFileName)
-                                    .build(),
-                            RequestBody.fromInputStream(newImage.getInputStream(), newImage.getSize()));
-                } catch (IOException e) {
-                    throw new IllegalStateException("S3 파일 업로드 중 문제가 발생했습니다.", e);
-                }
-                String fileUrl = String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, storeFileName);
+
+                fileUploader.saveFile(newImage, storeFileName);
+
+                String fileUrl = fileUploader.getFileUrl(storeFileName);
                 PostImage postImage = new PostImage(originalFilename, storeFileName, fileUrl);
                 post.addImage(postImage);
             }
@@ -125,19 +96,11 @@ public class PostServiceImpl implements PostService {
         post.getComments()
                 .forEach(comment -> comment.getImages().forEach(
                         image -> {
-                            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
-                                    .bucket(bucketName)
-                                    .key(image.getStoreFileName())
-                                    .build();
-                            s3Client.deleteObject(deleteRequest);
+                            fileUploader.deleteFile(image.getStoreFileName());
                         }));
-        post.getImages().forEach(image -> {
-            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(image.getStoreFileName())
-                    .build();
-            s3Client.deleteObject(deleteRequest);
 
+        post.getImages().forEach(image -> {
+            fileUploader.deleteFile(image.getStoreFileName());
         });
         postStore.deletePost(post);
     }
