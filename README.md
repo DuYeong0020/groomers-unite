@@ -26,7 +26,7 @@
 - Beckend: 1명(최두영)
 
 ### 개발 기간
-2025. 02 ~
+2025. 01 ~ 2025. 02
 ## 🛠기술 스택
 ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
