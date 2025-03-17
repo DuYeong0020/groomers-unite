@@ -1,6 +1,7 @@
 # groomers-unite
 
-### 프로젝트 소개
+## 개요
+### groomers-unite?
 애견 미용 업계에서는 미용사마다 실력 편차가 크며, 체계적인 피드백을 받기 어려운 현실입니다.  
 대부분 유명한 학원을 다니거나, 실력 있는 선생님께 사진을 보내 피드백을 받는 방법밖에 없습니다.
 
@@ -21,10 +22,24 @@
 - 게시글 기능
 - 댓글 및 평점 기능
 
-### 기술 스택
-- **Backend**: Spring Boot, JPA
-- **Database**: MySQL
-- **Infra**: AWS S3, EC2
+### 팀원 
+- Beckend: 1명(최두영)
+
+### 개발 기간
+2025. 02 ~
+## 🛠기술 스택
+![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![JPA](https://img.shields.io/badge/JPA-6DB33F?style=for-the-badge&logo=hibernate&logoColor=white)
+![QueryDSL](https://img.shields.io/badge/QueryDSL-6DB33F?style=for-the-badge)
+![Session](https://img.shields.io/badge/Auth-Session--Based-blue?style=flat-square)
+![AWS S3](https://img.shields.io/badge/Infra-AWS%20S3-orange?style=flat-square)  
+![AWS EC2](https://img.shields.io/badge/Infra-AWS%20EC2-yellow?style=flat-square)
+
+
+## ERD
+<img width="1169" alt="Image" src="https://github.com/user-attachments/assets/a5648762-95d1-413d-9de3-bd72a75204be" />
 
 ### 실행 방법
 #### 1. 프로젝트 클론
@@ -38,6 +53,3 @@ Environment Variables 항목에 JASYPT_ENCRYPTOR_PASSWORD 추가
 
 #### 3. Mysql 설정
 MySQL을 사용한다면, groomers_unite 데이터베이스를 미리 생성해야 합니다.
-
-### ERD
-https://www.erdcloud.com/p/5XGrSXJ4QTtqCvGTt
