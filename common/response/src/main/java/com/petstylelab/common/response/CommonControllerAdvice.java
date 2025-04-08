@@ -1,6 +1,6 @@
-package com.petstylelab.groomersunite.common.response;
+package com.petstylelab.common.response;
 
-import com.petstylelab.groomersunite.common.exception.UnAuthorizedException;
+import com.petstylelab.common.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,8 @@ public class CommonControllerAdvice {
      * Handles UnAuthorizedException.
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(UnAuthorizedException.class)
-    public <T> CommonResponse<T> handleUnAuthorizedException(UnAuthorizedException ex) {
+    @ExceptionHandler(UnauthorizedException.class)
+    public <T> CommonResponse<T> handleUnAuthorizedException(UnauthorizedException ex) {
         String errorMessage = ex.getMessage();
         log.error("UnAuthorizedException: {}", errorMessage);
         return CommonResponse.fail(errorMessage, ErrorCode.AUTH_UNAUTHORIZED.name());

@@ -1,4 +1,4 @@
-package com.petstylelab.groomersunite.common.response;
+package com.petstylelab.common.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
