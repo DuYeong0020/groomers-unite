@@ -1,1 +1,12 @@
 rootProject.name = 'groomers-unite'
+
+include 'common'
+include 'common:response'
+include 'common:exception'
+include 'common:argumentresolver'
+include 'common:jwt'
+include 'service'
+include 'service:user'
+include 'service:board'
+include 'service:post'
+include 'service:comment'
